@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday! 🎉✨</title>
+    <title>Happy Birthday! 🎉 Special Surprise!</title>
 
-    <!-- Canvas Confetti Library (Untuk Efek Pesta Kembang Api) -->
+    <!-- Canvas Confetti & Google Fonts -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
@@ -22,7 +20,7 @@
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb);
             background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            animation: gradientBG 12s ease infinite;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -37,9 +35,9 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Float Elements (Balon & Bintang) */
+        /* Elements Floating Background */
         .floating-item {
-            position: absolute;
+            position: fixed;
             user-select: none;
             pointer-events: none;
             animation: floatUp linear infinite;
@@ -51,35 +49,82 @@
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Container Card Utama */
+        /* ------------------------------------ */
+        /* SESI 1: TAMPILAN KADO AWAL          */
+        /* ------------------------------------ */
+        #gift-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 182, 193, 0.95);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            cursor: pointer;
+        }
+
+        .gift-box {
+            font-size: 100px;
+            animation: giftShake 1.2s infinite ease-in-out;
+            transition: transform 0.3s;
+        }
+
+        .gift-box:hover {
+            transform: scale(1.2);
+        }
+
+        @keyframes giftShake {
+            0%, 100% { transform: rotate(0deg); }
+            20% { transform: rotate(-10deg); }
+            40% { transform: rotate(10deg); }
+            60% { transform: rotate(-5deg); }
+            80% { transform: rotate(5deg); }
+        }
+
+        .gift-text {
+            font-family: 'Fredoka One', cursive;
+            color: #d63031;
+            font-size: 1.8rem;
+            margin-top: 15px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(0.95); }
+        }
+
+        /* ------------------------------------ */
+        /* SESI 2: KARTU UTAMA & KONTEN        */
+        /* ------------------------------------ */
         .card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
+            display: none; /* Muncul setelah kado diklik */
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
             border-radius: 25px;
             padding: 30px;
-            max-width: 480px;
+            max-width: 500px;
             width: 100%;
             text-align: center;
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             position: relative;
             z-index: 10;
             border: 4px solid #ffffff;
-            transform: scale(0.95);
-            animation: cardBounce 1s ease forwards;
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
-        @keyframes cardBounce {
-            0% { transform: scale(0.5); opacity: 0; }
-            70% { transform: scale(1.05); opacity: 1; }
-            100% { transform: scale(1); }
+        @keyframes popIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
-        /* Foto Ulang Tahun dengan Ring Glow */
+        /* Foto Ring Glow */
         .photo-wrapper {
             position: relative;
             width: 150px;
             height: 150px;
-            margin: 0 auto 20px auto;
+            margin: 0 auto 15px auto;
         }
 
         .profile-img {
@@ -89,263 +134,294 @@
             object-fit: cover;
             border: 5px solid #ff4757;
             box-shadow: 0 0 25px rgba(255, 71, 87, 0.6);
-            animation: pulseGlow 2s infinite alternate;
+            animation: glow 2s infinite alternate;
         }
 
-        @keyframes pulseGlow {
-            0% { box-shadow: 0 0 15px rgba(255, 71, 87, 0.5); transform: scale(1); }
-            100% { box-shadow: 0 0 30px rgba(255, 71, 87, 0.9); transform: scale(1.03); }
+        @keyframes glow {
+            0% { transform: scale(1); box-shadow: 0 0 15px rgba(255, 71, 87, 0.5); }
+            100% { transform: scale(1.04); box-shadow: 0 0 30px rgba(255, 71, 87, 0.9); }
         }
 
-        /* Judul */
         h1 {
             font-family: 'Fredoka One', cursive;
             color: #ff4757;
             font-size: 2.2rem;
             text-shadow: 2px 2px 0px #ffeaa7;
             margin-bottom: 10px;
-            animation: wiggle 3s ease-in-out infinite;
         }
 
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(-2deg); }
-            50% { transform: rotate(2deg); }
-        }
-
-        /* Animasi Kue & Lilin Interaktif */
-        .cake-container {
-            margin: 20px 0;
+        /* Interactive Cake */
+        .cake-box {
+            background: #fff0f3;
+            padding: 15px;
+            border-radius: 20px;
+            margin: 15px 0;
+            border: 2px dashed #ff7675;
             cursor: pointer;
-            display: inline-block;
         }
 
         .cake {
-            font-size: 70px;
+            font-size: 65px;
             position: relative;
             display: inline-block;
-            transition: transform 0.2s;
-        }
-
-        .cake:hover {
-            transform: scale(1.1);
         }
 
         .flame {
             position: absolute;
-            top: -10px;
+            top: -12px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 25px;
-            animation: flicker 0.6s infinite alternate;
+            font-size: 22px;
+            animation: flicker 0.5s infinite alternate;
         }
 
         @keyframes flicker {
             0% { opacity: 1; transform: translateX(-50%) scale(1); }
-            100% { opacity: 0.7; transform: translateX(-50%) scale(1.2); }
+            100% { opacity: 0.6; transform: translateX(-50%) scale(1.3); }
         }
 
-        .candle-hint {
-            font-size: 0.8rem;
-            color: #888;
-            margin-top: -10px;
-            margin-bottom: 15px;
+        .hint {
+            font-size: 0.85rem;
+            color: #d63031;
+            font-weight: 600;
         }
 
-        /* Teks Ucapan */
-        .message {
-            font-size: 1.05rem;
+        /* Ucapan Typewriter */
+        .message-box {
+            font-size: 1rem;
             color: #2d3436;
             line-height: 1.6;
             min-height: 80px;
-            margin-bottom: 20px;
-            background: rgba(255,255,255,0.6);
+            margin: 15px 0;
+            text-align: left;
+            background: #ffffff;
             padding: 15px;
             border-radius: 15px;
-            border: 2px dashed #ff7675;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
         }
 
-        /* Tombol Interaktif */
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        /* Form Tulis Wish */
+        .wish-section {
+            margin-top: 20px;
+            background: #ffeaa7;
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .wish-section h3 {
+            font-size: 1.1rem;
+            color: #d63031;
+            margin-bottom: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 70px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 2px solid #fdcb6e;
+            font-family: 'Poppins', sans-serif;
+            resize: none;
+            outline: none;
         }
 
         .btn {
             background: linear-gradient(45deg, #ff4757, #ff6b81);
             color: white;
             border: none;
-            padding: 12px 20px;
-            font-size: 1rem;
+            padding: 10px 20px;
+            font-size: 0.95rem;
             font-weight: 600;
             border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
-            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255, 71, 87, 0.4);
+            margin-top: 8px;
+            transition: all 0.2s;
         }
 
         .btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.6);
+            transform: scale(1.05);
         }
 
-        .btn-music {
-            background: linear-gradient(45deg, #1dd1a1, #10ac84);
-            box-shadow: 0 5px 15px rgba(29, 209, 161, 0.4);
-        }
-
-        .btn-music:hover {
-            box-shadow: 0 8px 20px rgba(29, 209, 161, 0.6);
-        }
-
-        /* Modal / Pesan Rahasia */
-        .secret-box {
+        /* Wish Result Box */
+        .wish-display {
             display: none;
             margin-top: 15px;
-            padding: 15px;
-            background-color: #ffeaa7;
-            border-radius: 15px;
-            color: #d63031;
-            font-weight: 600;
-            animation: popUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: #ffffff;
+            padding: 12px;
+            border-radius: 12px;
+            border-left: 5px solid #1dd1a1;
+            font-style: italic;
+            color: #10ac84;
+            animation: fadeIn 0.5s;
         }
 
-        @keyframes popUp {
-            0% { opacity: 0; transform: scale(0.5); }
-            100% { opacity: 1; transform: scale(1); }
+        /* Youtube Container Hidden Audio */
+        #youtube-player {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
 
-    <!-- Latar Belakang Elemen Melayang -->
+    <!-- Frame Youtube Player Musik (Hidden) -->
+    <div id="youtube-player"></div>
+
+    <!-- Background Elements Melayang -->
     <div id="floating-container"></div>
 
-    <div class="card">
+    <!-- SESI 1: LAYAR KADO UTAMA -->
+    <div id="gift-screen" onclick="bukaKejutan()">
+        <div class="gift-box">🎁</div>
+        <div class="gift-text">Ada Kejutan Buat Kamu!<br>(Klik Kadonya 👆)</div>
+    </div>
+
+    <!-- SESI 2: KARTU ULANG TAHUN INTERAKTIF -->
+    <div class="card" id="main-card">
         
-        <!-- ========================================================= -->
-        <!-- 1. LOKASI FOTO (Ganti Link Gambar di dalam src="")         -->
-        <!-- ========================================================= -->
+        <!-- 1. LOKASI UBAH FOTO (Ganti link URL di src="") -->
         <div class="photo-wrapper">
             <img class="profile-img" 
                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" 
-                 alt="Foto Ulang Tahun">
+                 alt="Foto Teman">
         </div>
 
-        <!-- ========================================================= -->
-        <!-- 2. LOKASI UBAH NAMA                                       -->
-        <!-- ========================================================= -->
+        <!-- 2. LOKASI NAMA -->
         <h1>Happy Birthday! 🎉</h1>
 
-        <!-- Interactive Cake -->
-        <div class="cake-container" onclick="tiupLilin()">
+        <!-- Sesi Tiup Lilin -->
+        <div class="cake-box" onclick="tiupLilin()">
             <div class="cake">
                 <span id="flame" class="flame">🔥</span>
                 🎂
             </div>
-            <div class="candle-hint">(Klik kue untuk tiup lilinya! 🌬️)</div>
+            <div class="hint" id="cake-hint">👉 Klik kuenya buat tiup lilinnya! 🌬️</div>
         </div>
 
-        <!-- ========================================================= -->
-        <!-- 3. LOKASI UBAH UCAPAN KETIK (Diubah di bagian JavaScript)  -->
-        <!-- ========================================================= -->
-        <div class="message" id="typewriter-text"></div>
+        <!-- 3. LOKASI UCAPAN (Ubah di Script bawah) -->
+        <div class="message-box" id="typewriter-text"></div>
 
-        <div class="btn-group">
-            <button class="btn btn-music" onclick="toggleMusic()">🎵 Putar Lagu Ulang Tahun</button>
-            <button class="btn" onclick="sebarConfetti(); tampilkanRahasia();">🎁 Buka Pesan Kejutan!</button>
+        <!-- SESI 3: FORM TULIS WISH / HARAPAN -->
+        <div class="wish-section">
+            <h3>✨ Tulis Harapan & Doamu di Sini:</h3>
+            <textarea id="user-wish" placeholder="Ketik wishlist / harapanmu di umur baru ini..."></textarea>
+            <button class="btn" onclick="kirimWish()">Kirim Harapan 🚀</button>
+            
+            <div id="wish-display" class="wish-display"></div>
         </div>
 
-        <!-- ========================================================= -->
-        <!-- 4. LOKASI PESAN RAHASIA                                   -->
-        <!-- ========================================================= -->
-        <div id="secret-message" class="secret-box">
-            💌 **Pesan Rahasia:** Makasih udah selalu ada ya! Jangan lupa traktirannya ditunggu minggu ini! 🍕🧋😆
-        </div>
     </div>
 
-    <!-- Audio Musik Ulang Tahun (Instrumen Ceria) -->
-    <audio id="hbd-song" loop>
-        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a7315b.mp3?filename=happy-birthday-15220.mp3" type="audio/mpeg">
-    </audio>
+    <!-- YouTube Iframe API Script -->
+    <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
         // =========================================================
-        // TEKS UCAPAN DENGAN EFEK MENGETIK (UBAH DI SINI)
+        // 1. SETUP MUSIK YOUTUBE (Otomatis Play pas Kado Diklik)
         // =========================================================
-        const ucapanTeks = "Selamat Ulang Tahun ya! 🥳✨\nSemoga panjang umur, sehat selalu, makin sukses, dan semua cita-citamu bisa terwujud tahun ini. Makasih udah jadi temen yang selalu ada dan bisa diandelin! Enjoy your special day! 🎂🎈";
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                videoId: 'KnJ7oeJzXyo', // ID Video YouTube
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 0,
+                    'loop': 1,
+                    'playlist': 'KnJ7oeJzXyo'
+                }
+            });
+        }
 
+        // =========================================================
+        // 2. UBAH TEKS UCAPAN DI SINI
+        // =========================================================
+        const ucapanTeks = "Selamat Ulang Tahun ya! 🥳✨\n\nSemoga di usiamu yang baru ini kamu makin bahagia, sehat selalu, makin sukses, dan semua impianmu tercapai. Makasih udah jadi sahabat yang luar biasa selama ini! Enjoy your special day! 🎂🎉";
+
+        // Fungsi Buka Kado + Play Lagu + Confetti
+        function bukaKejutan() {
+            document.getElementById('gift-screen').style.display = 'none';
+            document.getElementById('main-card').style.display = 'block';
+            
+            // Play Lagu Youtube
+            if (player && player.playVideo) {
+                player.playVideo();
+            }
+
+            // Hujan Confetti Meriah
+            sebarConfetti();
+            setTimeout(sebarConfetti, 1000);
+
+            // Jalankan Animasi Mengetik Teks
+            typeWriter();
+        }
+
+        // Animasi Mengetik
         let index = 0;
         function typeWriter() {
             if (index < ucapanTeks.length) {
                 let char = ucapanTeks.charAt(index);
                 document.getElementById("typewriter-text").innerHTML += char === '\n' ? '<br>' : char;
                 index++;
-                setTimeout(typeWriter, 40);
+                setTimeout(typeWriter, 35);
             }
         }
-        window.onload = () => {
-            typeWriter();
-            sebarConfetti();
-        };
 
-        // Efek Tiup Lilin
+        // Fitur Tiup Lilin
         let lilinPadam = false;
         function tiupLilin() {
             const flame = document.getElementById('flame');
+            const hint = document.getElementById('cake-hint');
             if(!lilinPadam) {
                 flame.style.display = 'none';
+                hint.innerText = "Yayy! Lilinnya berhasil ditiup! 🥳✨";
+                hint.style.color = "#1dd1a1";
                 lilinPadam = true;
                 sebarConfetti();
-                alert("Horeee! Lilinnya mati! Semoga semua doa dan harapanmu terkabul ya! 🤲✨");
             } else {
                 flame.style.display = 'block';
+                hint.innerText = "👉 Klik kuenya buat tiup lilinnya! 🌬️";
+                hint.style.color = "#d63031";
                 lilinPadam = false;
             }
         }
 
-        // Efek Musik
-        const audio = document.getElementById("hbd-song");
-        let isPlaying = false;
-        function toggleMusic() {
-            if (isPlaying) {
-                audio.pause();
-                isPlaying = false;
-            } else {
-                audio.play();
-                isPlaying = true;
+        // Fitur Kirim Wish
+        function kirimWish() {
+            const wishInput = document.getElementById('user-wish').value;
+            const wishDisplay = document.getElementById('wish-display');
+            
+            if(wishInput.trim() !== "") {
+                wishDisplay.style.display = "block";
+                wishDisplay.innerHTML = "🌟 <b>Harapanmu Tersimpan:</b><br>\"" + wishInput + "\"<br><small>Aamiin... Semoga semua doamu dikabulkan ya! 🤲✨</small>";
+                document.getElementById('user-wish').value = "";
                 sebarConfetti();
+            } else {
+                alert("Tulis dulu harapanmu ya sebelum mengeklik tombol kirim! 😊");
             }
         }
 
-        // Efek Hujan Confetti / Kembang Api Kertas
+        // Generater Hujan Confetti
         function sebarConfetti() {
             confetti({
-                particleCount: 100,
-                spread: 70,
+                particleCount: 120,
+                spread: 80,
                 origin: { y: 0.6 }
             });
         }
 
-        // Tampilkan Pesan Rahasia
-        function tampilkanRahasia() {
-            const secretBox = document.getElementById("secret-message");
-            if (secretBox.style.display === "block") {
-                secretBox.style.display = "none";
-            } else {
-                secretBox.style.display = "block";
-            }
-        }
-
-        // Generate Balon & Emoji Melayang Latar Belakang
+        // Floating Background Elements (Balon, Bintang, Love)
         const container = document.getElementById('floating-container');
-        const items = ['🎈', '✨', '💖', '🎁', '⭐', '🌸'];
-        for (let i = 0; i < 20; i++) {
+        const items = ['🎈', '✨', '💖', '🎁', '⭐', '🌸', '🎉'];
+        for (let i = 0; i < 22; i++) {
             let div = document.createElement('div');
             div.className = 'floating-item';
             div.innerText = items[Math.floor(Math.random() * items.length)];
             div.style.left = Math.random() * 100 + 'vw';
-            div.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            div.style.animationDuration = (Math.random() * 6 + 6) + 's';
             div.style.animationDelay = Math.random() * 5 + 's';
             div.style.fontSize = (Math.random() * 20 + 20) + 'px';
             container.appendChild(div);
