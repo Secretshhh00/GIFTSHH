@@ -7,44 +7,53 @@
 
     <!-- Canvas Confetti & Google Fonts -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --gold-primary: #ffd700;
+            --gold-secondary: #d4af37;
+            --purple-deep: #0e021a;
+            --purple-card: rgba(26, 8, 42, 0.85);
+            --pink-accent: #ff69b4;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: radial-gradient(circle at center, #2d0b32, #120318, #05010a);
+            background: radial-gradient(circle at center, #2d0b32 0%, #120318 60%, #05010a 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow-x: hidden;
-            padding: 20px 10px;
+            padding: 20px 12px;
             color: #f3e5f5;
         }
 
-        /* Sparkles Background */
+        /* Particles Background */
         .sparkle {
             position: fixed;
-            width: 4px;
-            height: 4px;
-            background: #ffd700;
+            width: 5px;
+            height: 5px;
+            background: var(--gold-primary);
             border-radius: 50%;
-            box-shadow: 0 0 10px #ffd700, 0 0 20px #ff69b4;
-            animation: floatUp 8s linear infinite;
+            box-shadow: 0 0 12px var(--gold-primary), 0 0 25px var(--pink-accent);
+            animation: floatUp 7s linear infinite;
             pointer-events: none;
             z-index: 1;
         }
 
         @keyframes floatUp {
             0% { transform: translateY(105vh) scale(0); opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+            50% { opacity: 0.9; }
+            100% { transform: translateY(-10vh) scale(1.6); opacity: 0; }
         }
 
         /* ---------------------------------------------------- */
@@ -63,68 +72,92 @@
             padding: 20px;
         }
 
-        .cake-wrapper {
-            font-size: 110px;
-            position: relative;
-            cursor: pointer;
-            display: inline-block;
-            transition: transform 0.3s;
-            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.4));
-        }
-
-        .cake-wrapper:hover {
-            transform: scale(1.1);
-        }
-
-        /* Api Lilin Menyala Realistis */
-        .flame-active {
-            position: absolute;
-            top: -15px; left: 50%;
-            transform: translateX(-50%);
-            font-size: 35px;
-            animation: flameFlicker 0.3s infinite alternate;
-            filter: drop-shadow(0 0 15px #ff4500);
-        }
-
-        @keyframes flameFlicker {
-            0% { transform: translateX(-50%) scale(1) rotate(-2deg); opacity: 1; }
-            100% { transform: translateX(-50%) scale(1.25) rotate(2deg); opacity: 0.8; }
-        }
-
-        /* Efek Asap Setelah Lilin Ditiup */
-        .smoke {
-            display: none;
-            position: absolute;
-            top: -25px; left: 50%;
-            transform: translateX(-50%);
-            font-size: 30px;
-            animation: smokeRise 1.5s forwards;
-            opacity: 0.8;
-        }
-
-        @keyframes smokeRise {
-            0% { transform: translateX(-50%) translateY(0) scale(0.8); opacity: 0.8; }
-            100% { transform: translateX(-50%) translateY(-40px) scale(1.8); opacity: 0; }
-        }
-
         .candle-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            color: #d4af37;
-            margin-top: 25px;
-            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #ffe600, #ffb3ec, #d4af37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
         }
 
         .candle-subtitle {
-            font-size: 1rem;
+            font-size: 1.05rem;
             color: #e0b0ff;
-            margin-top: 10px;
-            animation: pulseText 1.5s infinite;
+            margin-bottom: 40px;
+            animation: pulseText 1.6s infinite ease-in-out;
         }
 
         @keyframes pulseText {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(0.97); }
+            50% { opacity: 0.65; transform: scale(0.96); }
+        }
+
+        /* Interactive Cake Area */
+        .cake-container {
+            position: relative;
+            cursor: pointer;
+            padding: 20px;
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .cake-container:hover {
+            transform: scale(1.08);
+        }
+
+        .cake-emoji {
+            font-size: 130px;
+            filter: drop-shadow(0 0 35px rgba(255, 215, 0, 0.5));
+            display: block;
+        }
+
+        /* Animated Glowing Flame */
+        .flame-active {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 42px;
+            animation: flameFlicker 0.25s infinite alternate ease-in-out;
+            filter: drop-shadow(0 0 18px #ff4500) drop-shadow(0 0 35px #ffd700);
+            pointer-events: none;
+        }
+
+        @keyframes flameFlicker {
+            0% { transform: translateX(-50%) scale(1) rotate(-3deg); opacity: 1; }
+            100% { transform: translateX(-50%) scale(1.28) rotate(3deg); opacity: 0.85; }
+        }
+
+        .smoke {
+            display: none;
+            position: absolute;
+            top: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 38px;
+            animation: smokeRise 1.6s forwards ease-out;
+            opacity: 0.8;
+            pointer-events: none;
+        }
+
+        @keyframes smokeRise {
+            0% { transform: translateX(-50%) translateY(0) scale(0.8); opacity: 0.8; }
+            100% { transform: translateX(-50%) translateY(-55px) scale(2); opacity: 0; }
+        }
+
+        .hint-badge {
+            margin-top: 25px;
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid var(--gold-secondary);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--gold-primary);
+            letter-spacing: 1px;
+            backdrop-filter: blur(5px);
         }
 
         /* ---------------------------------------------------- */
@@ -134,8 +167,8 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(15px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -143,14 +176,14 @@
         }
 
         .popup-card {
-            background: linear-gradient(135deg, #2a0835, #15021c);
-            border: 2px solid #d4af37;
-            border-radius: 25px;
-            padding: 35px 25px;
+            background: linear-gradient(145deg, #2a0835, #15021c);
+            border: 2px solid var(--gold-secondary);
+            border-radius: 28px;
+            padding: 40px 28px;
             text-align: center;
-            max-width: 420px;
+            max-width: 430px;
             width: 100%;
-            box-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
+            box-shadow: 0 0 50px rgba(212, 175, 55, 0.45);
             animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
@@ -160,19 +193,22 @@
         }
 
         .big-gift-icon {
-            font-size: 85px;
+            font-size: 95px;
             cursor: pointer;
-            animation: giftBounce 1.5s infinite ease-in-out;
+            margin: 15px 0;
+            display: inline-block;
+            animation: giftBounce 1.4s infinite ease-in-out;
             transition: transform 0.3s;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
         }
 
         .big-gift-icon:hover {
-            transform: scale(1.15) rotate(5deg);
+            transform: scale(1.18) rotate(6deg);
         }
 
         @keyframes giftBounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-18px); }
         }
 
         /* ---------------------------------------------------- */
@@ -180,13 +216,13 @@
         /* ---------------------------------------------------- */
         .main-card {
             display: none;
-            background: rgba(30, 10, 40, 0.8);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(212, 175, 55, 0.35);
-            box-shadow: 0 0 50px rgba(186, 85, 211, 0.25);
-            border-radius: 30px;
-            padding: 35px 25px;
-            max-width: 520px;
+            background: var(--purple-card);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 0 60px rgba(186, 85, 211, 0.3);
+            border-radius: 32px;
+            padding: 38px 26px;
+            max-width: 530px;
             width: 100%;
             text-align: center;
             position: relative;
@@ -195,18 +231,18 @@
         }
 
         @keyframes cardAppear {
-            0% { opacity: 0; transform: translateY(30px); }
+            0% { opacity: 0; transform: translateY(35px); }
             100% { opacity: 1; transform: translateY(0); }
         }
 
         .avatar-frame {
-            width: 135px;
-            height: 135px;
-            margin: 0 auto 15px auto;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 18px auto;
             border-radius: 50%;
-            padding: 5px;
-            background: linear-gradient(45deg, #d4af37, #ff69b4, #d4af37);
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
+            padding: 6px;
+            background: linear-gradient(45deg, #d4af37, #ff69b4, #ffe600, #d4af37);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
             animation: rotateGlow 6s linear infinite;
         }
 
@@ -222,29 +258,57 @@
         }
 
         h1.title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
+            font-family: 'Cinzel', serif;
+            font-size: 2.3rem;
             background: linear-gradient(45deg, #ffe600, #ffb3ec, #d4af37);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
+        /* Audio Music Bar Control */
+        .music-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: #ffd700;
+        }
+
+        .music-dot {
+            width: 8px;
+            height: 8px;
+            background: #ff4500;
+            border-radius: 50%;
+            animation: blinkDot 1s infinite;
+        }
+
+        @keyframes blinkDot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
         /* Album Photo Auto Scroll */
-        .album-section { margin: 25px 0; }
-        .album-title {
-            font-size: 0.85rem;
+        .album-section { margin: 28px 0 20px 0; }
+        .section-header {
+            font-size: 0.88rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            color: #d4af37;
+            color: var(--gold-secondary);
             margin-bottom: 12px;
+            font-weight: 600;
         }
 
         .slider-container {
             width: 100%;
             overflow: hidden;
-            border-radius: 18px;
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.45);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.7);
         }
 
         .slider-track {
@@ -253,100 +317,113 @@
             transition: transform 0.6s ease-in-out;
         }
 
-        .slide { min-width: 100%; height: 230px; }
+        .slide { min-width: 100%; height: 240px; }
         .slide img { width: 100%; height: 100%; object-fit: cover; }
 
         /* Typewriter Box */
         .message-text {
             font-size: 0.95rem;
-            line-height: 1.7;
+            line-height: 1.75;
             color: #f3e5f5;
-            background: rgba(0, 0, 0, 0.35);
-            padding: 18px;
-            border-radius: 15px;
-            border-left: 3px solid #d4af37;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 20px;
+            border-radius: 18px;
+            border-left: 4px solid var(--gold-secondary);
             text-align: left;
-            margin: 20px 0;
-            min-height: 90px;
+            margin: 22px 0;
+            min-height: 95px;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.3);
         }
 
-        /* 4 Kado Mini Bertema */
+        /* 6 Kado Mini Premium Grid */
         .gifts-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 12px;
-            margin: 20px 0;
+            margin: 18px 0 25px 0;
         }
 
         .gift-item {
-            background: rgba(212, 175, 55, 0.1);
-            border: 1px solid #d4af37;
-            border-radius: 15px;
-            padding: 15px 10px;
+            background: rgba(212, 175, 55, 0.08);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            border-radius: 16px;
+            padding: 16px 8px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
 
         .gift-item:hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px) scale(1.03);
             background: rgba(212, 175, 55, 0.25);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.45);
+            border-color: var(--gold-primary);
         }
 
-        .gift-icon { font-size: 32px; }
-        .gift-label { font-size: 0.8rem; color: #ffe600; margin-top: 5px; font-weight: 600; }
+        .gift-icon { font-size: 34px; }
+        .gift-label { font-size: 0.78rem; color: #ffe600; margin-top: 6px; font-weight: 600; }
 
-        /* Wishbook */
+        /* Wishbook Section */
         .wishbook {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 20px;
-            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            padding: 22px 18px;
+            border-radius: 22px;
             margin-top: 25px;
         }
 
         textarea {
             width: 100%;
-            height: 75px;
-            background: rgba(0, 0, 0, 0.4);
+            height: 80px;
+            background: rgba(0, 0, 0, 0.45);
             border: 1px solid rgba(212, 175, 55, 0.4);
-            border-radius: 12px;
-            padding: 10px;
+            border-radius: 14px;
+            padding: 12px;
             color: #fff;
             font-family: 'Poppins', sans-serif;
             resize: none;
             outline: none;
-            margin-top: 10px;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            transition: border-color 0.3s;
+        }
+
+        textarea:focus {
+            border-color: var(--gold-primary);
         }
 
         .luxury-btn {
-            background: linear-gradient(45deg, #d4af37, #aa7c11);
+            background: linear-gradient(45deg, #d4af37, #ffe600, #aa7c11);
+            background-size: 200% 200%;
             color: #000;
-            font-weight: 600;
+            font-weight: 700;
             border: none;
-            padding: 10px 24px;
-            border-radius: 25px;
+            padding: 12px 28px;
+            border-radius: 30px;
             cursor: pointer;
-            font-size: 0.9rem;
-            margin-top: 12px;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-            transition: all 0.3s;
+            font-size: 0.92rem;
+            margin-top: 14px;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            transition: all 0.3s ease;
         }
 
         .luxury-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.7);
+            transform: scale(1.06);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.75);
+            background-position: right center;
         }
 
         .wish-result {
             display: none;
-            margin-top: 12px;
-            padding: 12px;
+            margin-top: 15px;
+            padding: 14px;
             background: rgba(212, 175, 55, 0.15);
-            border-radius: 10px;
+            border: 1px dashed var(--gold-secondary);
+            border-radius: 12px;
             color: #ffd700;
             font-style: italic;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
         }
 
         /* Modal Dialog Kado Rahasia */
@@ -354,8 +431,8 @@
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.88);
+            backdrop-filter: blur(10px);
             z-index: 1001;
             justify-content: center;
             align-items: center;
@@ -363,14 +440,14 @@
         }
 
         .modal-content {
-            background: #1e0a28;
-            border: 2px solid #d4af37;
-            padding: 25px;
-            border-radius: 20px;
-            max-width: 400px;
+            background: linear-gradient(135deg, #1e0a28, #0c0211);
+            border: 2px solid var(--gold-secondary);
+            padding: 30px 22px;
+            border-radius: 24px;
+            max-width: 410px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
             animation: popIn 0.4s ease;
         }
 
@@ -390,13 +467,15 @@
     <!-- ========================================================= -->
     <div id="candle-screen">
         <div class="candle-title">Make a Wish ✨</div>
-        <div class="candle-subtitle">Ketuk lilin di bawah untuk meniupnya! 🌬️</div>
+        <div class="candle-subtitle">Tiup atau ketuk lilinnya untuk memulai kejutan! 🌬️</div>
 
-        <div style="margin-top: 40px;" class="cake-wrapper" onclick="blowCandleMain()">
+        <div class="cake-container" onclick="blowCandleMain()">
             <span id="mainFlame" class="flame-active">🔥</span>
             <span id="mainSmoke" class="smoke">💨</span>
-            🎂
+            <span class="cake-emoji">🎂</span>
         </div>
+
+        <div class="hint-badge">👆 SENTUH LILIN DI ATAS</div>
     </div>
 
     <!-- ========================================================= -->
@@ -404,12 +483,14 @@
     <!-- ========================================================= -->
     <div id="gift-popup-modal">
         <div class="popup-card">
-            <div style="color: #ffd700; font-size: 1.3rem; font-family: 'Playfair Display', serif;">Lilin Berhasil Ditiup! 🎉</div>
-            <p style="font-size: 0.85rem; color: #e0b0ff; margin: 10px 0 20px 0;">Ada kado spesial menunggumu. Buka sekarang!</p>
+            <div style="color: #ffd700; font-size: 1.4rem; font-family: 'Cinzel', serif;">LILIN BERHASIL DITIUP! 🎉</div>
+            <p style="font-size: 0.9rem; color: #e0b0ff; margin: 12px 0 15px 0;">Keinginanmu telah terkirim ke bintang-bintang ✨<br>Ada kado misteri spesial yang sudah terbuka untukmu!</p>
             
             <div class="big-gift-icon" onclick="openMainGift()">🎁</div>
             
-            <button class="luxury-btn" style="margin-top: 20px;" onclick="openMainGift()">Buka Kado Spesial ✨</button>
+            <div>
+                <button class="luxury-btn" onclick="openMainGift()">Buka Kado Spesial Sekarang 🔑</button>
+            </div>
         </div>
     </div>
 
@@ -424,11 +505,16 @@
         </div>
 
         <h1 class="title">Happy Birthday! 🎉</h1>
-        <p style="color: #d4af37; font-style: italic; font-size: 0.9rem;">Wishing you a day as extraordinary as you are ✨</p>
+        <p style="color: #d4af37; font-style: italic; font-size: 0.92rem; margin-top: 4px;">Wishing you a day as extraordinary as you are ✨</p>
+
+        <div class="music-bar">
+            <span class="music-dot"></span>
+            <span>🎵 Playing Birthday Serenade</span>
+        </div>
 
         <!-- ALBUM FOTO AUTO-SCROLL -->
         <div class="album-section">
-            <div class="album-title">📸 Precious Memories</div>
+            <div class="section-header">📸 Precious Moments & Memories</div>
             <div class="slider-container">
                 <div class="slider-track" id="sliderTrack">
                     <!-- ========================================================= -->
@@ -444,8 +530,8 @@
         <!-- UCAPAN TYPEWRITER -->
         <div class="message-text" id="typewriterText"></div>
 
-        <!-- 4 KADO MINI BERBEDA -->
-        <div style="font-size: 0.85rem; color: #d4af37; margin-top: 15px;">🎁 Buka 4 Kado Rahasia Ini:</div>
+        <!-- 6 KADO MINI PREMIUM -->
+        <div class="section-header" style="margin-top: 25px;">🎁 Buka 6 Kado Rahasia Kamu:</div>
         <div class="gifts-grid">
             <div class="gift-item" onclick="openMiniGift(1)">
                 <div class="gift-icon">💎</div>
@@ -460,16 +546,24 @@
                 <div class="gift-label">Kado #3</div>
             </div>
             <div class="gift-item" onclick="openMiniGift(4)">
-                <div class="gift-icon">🌟</div>
+                <div class="gift-icon">☕</div>
                 <div class="gift-label">Kado #4</div>
+            </div>
+            <div class="gift-item" onclick="openMiniGift(5)">
+                <div class="gift-icon">🎬</div>
+                <div class="gift-label">Kado #5</div>
+            </div>
+            <div class="gift-item" onclick="openMiniGift(6)">
+                <div class="gift-icon">🌟</div>
+                <div class="gift-label">Kado #6</div>
             </div>
         </div>
 
         <!-- FORM WISHBOOK -->
         <div class="wishbook">
-            <div style="color: #d4af37; font-size: 0.9rem;">✨ Wishbook Ulang Tahun</div>
-            <textarea id="wishInput" placeholder="Tuliskan harapan & doamu di usia baru ini..."></textarea>
-            <button class="luxury-btn" onclick="submitWish()">Simpan Harapan 🚀</button>
+            <div style="color: #d4af37; font-size: 0.92rem; font-weight: 600;">✨ Wishbook Ulang Tahun</div>
+            <textarea id="wishInput" placeholder="Tuliskan harapan & doamu yang paling indah di sini..."></textarea>
+            <button class="luxury-btn" onclick="submitWish()">Simpan & Aminkan Harapan 🚀</button>
             <div id="wishDisplay" class="wish-result"></div>
         </div>
     </div>
@@ -477,10 +571,10 @@
     <!-- MODAL DIALOG KADO RAHASIA MINI -->
     <div class="modal" id="giftModal">
         <div class="modal-content">
-            <div id="modalIcon" style="font-size: 50px;">🎁</div>
-            <div id="modalTitle" style="color: #ffd700; font-family: 'Playfair Display', serif; font-size: 1.4rem; margin: 10px 0;"></div>
-            <div id="modalBody" style="font-size: 0.9rem; color: #f3e5f5; line-height: 1.6;"></div>
-            <button class="luxury-btn" style="margin-top: 20px;" onclick="closeGiftModal()">Tutup ✨</button>
+            <div id="modalIcon" style="font-size: 55px; filter: drop-shadow(0 0 15px rgba(255,215,0,0.5));">🎁</div>
+            <div id="modalTitle" style="color: #ffd700; font-family: 'Cinzel', serif; font-size: 1.45rem; margin: 12px 0 8px 0;"></div>
+            <div id="modalBody" style="font-size: 0.92rem; color: #f3e5f5; line-height: 1.7;"></div>
+            <button class="luxury-btn" style="margin-top: 22px;" onclick="closeGiftModal()">Tutup & Simpan ✨</button>
         </div>
     </div>
 
@@ -498,7 +592,7 @@
         }
 
         // 2. TEKS UCAPAN
-        const greetingText = "Selamat Ulang Tahun ya! ✨\n\nDi usia baru ini, semoga setiap langkahmu selalu dipenuhi kebahagiaan, kesehatan, dan keberhasilan yang melimpah. Makasih udah jadi teman yang luar biasa dan selalu membawa keceriaan! Enjoy your magical special day! 🎂💖";
+        const greetingText = "Selamat Ulang Tahun ya! ✨\n\nDi usia baru ini, semoga setiap langkahmu selalu dipenuhi kebahagiaan, kesehatan, ketenangan hati, dan keberhasilan yang melimpah. Terima kasih sudah menjadi sosok yang luar biasa dan selalu membawa warna manis di setiap harimu. Tetaplah bersinar dan menginspirasi! Enjoy your grand special day! 🎂💖🌟";
 
         // Meniup Lilin Utama
         let candleIsBlown = false;
@@ -509,12 +603,13 @@
             // Memutar musik otomatis saat interaksi pertama
             if (player && player.playVideo) { player.playVideo(); }
 
-            // Animasi Tiup Lilin
+            // Animasi Tiup Lilin & Asap
             document.getElementById('mainFlame').style.display = 'none';
             document.getElementById('mainSmoke').style.display = 'block';
 
             triggerGoldConfetti();
-            setTimeout(triggerGoldConfetti, 600);
+            setTimeout(triggerGoldConfetti, 500);
+            setTimeout(triggerGoldConfetti, 1000);
 
             // Tampilkan Pop-up Kado Utama
             setTimeout(() => {
@@ -540,7 +635,7 @@
                 let char = greetingText.charAt(charIndex);
                 document.getElementById("typewriterText").innerHTML += char === '\n' ? '<br>' : char;
                 charIndex++;
-                setTimeout(startTypewriter, 35);
+                setTimeout(startTypewriter, 32);
             }
         }
 
@@ -552,30 +647,40 @@
             setInterval(() => {
                 currentSlide = (currentSlide + 1) % totalSlides;
                 track.style.transform = `translateX(-${currentSlide * 100}%)`;
-            }, 3000);
+            }, 3200);
         }
 
-        // Isi 4 Kado Mini Bertema
+        // Isi 6 Kado Mini Bertema Premium
         const giftData = {
             1: {
                 icon: "💎",
                 title: "Voucher Kebahagiaan",
-                text: "Kamu berhak mendapakan hari yang penuh tawa & treat makanan/traktiran ngopi bebas pilih tempat! ☕🍰"
+                text: "Kamu berhak mendapatkan 1 hari bebas resah + treat kuliner favorit atau traktiran ngopi manis bebas pilih tempat! ☕🍰"
             },
             2: {
                 icon: "💌",
-                title: "Pesan Rahasia Sahabat",
-                text: "Makasih ya udah selalu ada dan bisa diandalin. Kamu sosok yang sangat berharga buat orang-orang di sekitarmu! ✨"
+                title: "Pesan Surat Rahasia",
+                text: "Terima kasih sudah menjadi sosok yang selalu bisa diandalkan dan membawa hangat di lingkungan sekitarmu. Kamu berharga banget! ✨"
             },
             3: {
                 icon: "👑",
-                title: "Mahkota Harapan",
-                text: "Semoga semua cita-cita besar yang kamu impikan bisa terwujud satu per satu di tahun ini. Tetap semangat & percaya diri! 🌟"
+                title: "Mahkota Impian",
+                text: "Semoga semua impian besar yang sedang kamu perjuangkan diam-diam bisa terwujud satu per satu di tahun ini. Percaya pada prosesmu! 🌟"
             },
             4: {
+                icon: "☕",
+                title: "Tiket Rehat & Chill",
+                text: "Kapan pun kamu merasa capek, ingat untuk istirahat sejenak. Dunia bisa menunggu, tapi senyum manis dan kesehatanmu itu nomor satu! 🌿"
+            },
+            5: {
+                icon: "🎬",
+                title: "Nonton & Movie Date",
+                text: "Kupon khusus buat nonton bioskop / marathon film pilihanmu lengkap sama popcorn jumbo. Tinggal atur jadwalnya aja! 🍿🎟️"
+            },
+            6: {
                 icon: "🌟",
                 title: "Janji Kebersamaan",
-                text: "Semoga pertemanan kita makin awet, makin kompak, dan makin banyak momen seru yang bisa kita lewati bareng-bareng! 🎉"
+                text: "Semoga pertemanan kita makin kompak, awet, dan makin banyak momen-momen konyol nan membahagiakan yang bisa kita lewati bareng! 🎉"
             }
         };
 
@@ -598,7 +703,7 @@
             const res = document.getElementById('wishDisplay');
             if(val.trim() !== "") {
                 res.style.display = 'block';
-                res.innerHTML = "🌟 <b>Harapanmu Tersimpan:</b><br>\"" + val + "\"<br><small>Aamiin... Semoga dikabulkan secepatnya! 🤲✨</small>";
+                res.innerHTML = "🌟 <b>Harapan Indahmu Tersimpan:</b><br>\"" + val + "\"<br><small>Aamiin YRA... Semoga dikabulkan secepatnya! 🤲✨</small>";
                 document.getElementById('wishInput').value = "";
                 triggerGoldConfetti();
             }
@@ -607,16 +712,16 @@
         // Confetti Effect
         function triggerGoldConfetti() {
             confetti({
-                particleCount: 110,
-                spread: 90,
+                particleCount: 120,
+                spread: 100,
                 origin: { y: 0.6 },
-                colors: ['#ffd700', '#ff69b4', '#ffffff', '#e0b0ff']
+                colors: ['#ffd700', '#ff69b4', '#ffffff', '#e0b0ff', '#ff4500']
             });
         }
 
         // Background Sparkles
         const sparkleContainer = document.getElementById('sparkle-container');
-        for (let i = 0; i < 28; i++) {
+        for (let i = 0; i < 30; i++) {
             let el = document.createElement('div');
             el.className = 'sparkle';
             el.style.left = Math.random() * 100 + 'vw';
