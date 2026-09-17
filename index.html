@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Royal Birthday Celebration ✨</title>
+    <title>A Royal Birthday Magical Celebration ✨</title>
 
-    <!-- Canvas Confetti & Fonts -->
+    <!-- Canvas Confetti & Google Fonts -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
@@ -28,7 +28,7 @@
             color: #f3e5f5;
         }
 
-        /* Ambient Sparkles Background */
+        /* Sparkles Background */
         .sparkle {
             position: fixed;
             width: 4px;
@@ -48,9 +48,9 @@
         }
 
         /* ---------------------------------------------------- */
-        /* LAYAR AWAL: KADO KEJUTAN ELEGAN                     */
+        /* TAHAP 1: SCREEN TIUP LILIN UTAMA                    */
         /* ---------------------------------------------------- */
-        #gift-overlay {
+        #candle-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle, #3b1044 0%, #0c0211 100%);
@@ -59,51 +59,131 @@
             justify-content: center;
             align-items: center;
             z-index: 999;
-            cursor: pointer;
             text-align: center;
+            padding: 20px;
         }
 
-        .luxury-box {
-            font-size: 90px;
-            filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.6));
-            animation: boxFloat 2s ease-in-out infinite alternate;
+        .cake-wrapper {
+            font-size: 110px;
+            position: relative;
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.3s;
+            filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.4));
+        }
+
+        .cake-wrapper:hover {
+            transform: scale(1.1);
+        }
+
+        /* Api Lilin Menyala Realistis */
+        .flame-active {
+            position: absolute;
+            top: -15px; left: 50%;
+            transform: translateX(-50%);
+            font-size: 35px;
+            animation: flameFlicker 0.3s infinite alternate;
+            filter: drop-shadow(0 0 15px #ff4500);
+        }
+
+        @keyframes flameFlicker {
+            0% { transform: translateX(-50%) scale(1) rotate(-2deg); opacity: 1; }
+            100% { transform: translateX(-50%) scale(1.25) rotate(2deg); opacity: 0.8; }
+        }
+
+        /* Efek Asap Setelah Lilin Ditiup */
+        .smoke {
+            display: none;
+            position: absolute;
+            top: -25px; left: 50%;
+            transform: translateX(-50%);
+            font-size: 30px;
+            animation: smokeRise 1.5s forwards;
+            opacity: 0.8;
+        }
+
+        @keyframes smokeRise {
+            0% { transform: translateX(-50%) translateY(0) scale(0.8); opacity: 0.8; }
+            100% { transform: translateX(-50%) translateY(-40px) scale(1.8); opacity: 0; }
+        }
+
+        .candle-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #d4af37;
+            margin-top: 25px;
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+        }
+
+        .candle-subtitle {
+            font-size: 1rem;
+            color: #e0b0ff;
+            margin-top: 10px;
+            animation: pulseText 1.5s infinite;
+        }
+
+        @keyframes pulseText {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.97); }
+        }
+
+        /* ---------------------------------------------------- */
+        /* POPUP MODAL KADO UTAMA (SETELAH TIUP LILIN)          */
+        /* ---------------------------------------------------- */
+        #gift-popup-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(12px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .popup-card {
+            background: linear-gradient(135deg, #2a0835, #15021c);
+            border: 2px solid #d4af37;
+            border-radius: 25px;
+            padding: 35px 25px;
+            text-align: center;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .big-gift-icon {
+            font-size: 85px;
+            cursor: pointer;
+            animation: giftBounce 1.5s infinite ease-in-out;
             transition: transform 0.3s;
         }
 
-        .luxury-box:hover {
+        .big-gift-icon:hover {
             transform: scale(1.15) rotate(5deg);
         }
 
-        @keyframes boxFloat {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-20px); }
-        }
-
-        .overlay-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: #d4af37;
-            margin-top: 20px;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-        }
-
-        .overlay-subtitle {
-            font-size: 0.9rem;
-            color: #e0b0ff;
-            margin-top: 8px;
-            font-weight: 300;
+        @keyframes giftBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
         }
 
         /* ---------------------------------------------------- */
-        /* KARTU CONTAINER UTAMA                                */
+        /* TAHAP 2: KARTU UTAMA LENGKAP                         */
         /* ---------------------------------------------------- */
         .main-card {
             display: none;
-            background: rgba(30, 10, 40, 0.75);
+            background: rgba(30, 10, 40, 0.8);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            box-shadow: 0 0 50px rgba(186, 85, 211, 0.2), inset 0 0 20px rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            box-shadow: 0 0 50px rgba(186, 85, 211, 0.25);
             border-radius: 30px;
             padding: 35px 25px;
             max-width: 520px;
@@ -115,14 +195,13 @@
         }
 
         @keyframes cardAppear {
-            0% { opacity: 0; transform: translateY(40px) scale(0.95); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
 
-        /* Avatar Utama */
         .avatar-frame {
-            width: 130px;
-            height: 130px;
+            width: 135px;
+            height: 135px;
             margin: 0 auto 15px auto;
             border-radius: 50%;
             padding: 5px;
@@ -148,31 +227,24 @@
             background: linear-gradient(45deg, #ffe600, #ffb3ec, #d4af37);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
         }
 
-        /* ---------------------------------------------------- */
-        /* AUTOSCROLL ALBUM FOTO                                 */
-        /* ---------------------------------------------------- */
-        .album-section {
-            margin: 25px 0;
-        }
-
+        /* Album Photo Auto Scroll */
+        .album-section { margin: 25px 0; }
         .album-title {
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             color: #d4af37;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .slider-container {
             width: 100%;
             overflow: hidden;
-            border-radius: 15px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            position: relative;
+            border-radius: 18px;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.6);
         }
 
         .slider-track {
@@ -181,117 +253,15 @@
             transition: transform 0.6s ease-in-out;
         }
 
-        .slide {
-            min-width: 100%;
-            height: 220px;
-        }
-
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* ---------------------------------------------------- */
-        /* SESI KUE & TIUP LILIN                                */
-        /* ---------------------------------------------------- */
-        .cake-area {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 20px;
-            margin: 20px 0;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .cake-area:hover {
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .cake-icon {
-            font-size: 60px;
-            position: relative;
-            display: inline-block;
-        }
-
-        .flame-anim {
-            position: absolute;
-            top: -10px; left: 50%;
-            transform: translateX(-50%);
-            font-size: 20px;
-            animation: flameFlicker 0.4s infinite alternate;
-        }
-
-        @keyframes flameFlicker {
-            0% { opacity: 1; transform: translateX(-50%) scale(1); }
-            100% { opacity: 0.6; transform: translateX(-50%) scale(1.3); }
-        }
-
-        /* ---------------------------------------------------- */
-        /* KOTAK KADO MULTI-SURPRISE                            */
-        /* ---------------------------------------------------- */
-        .gifts-grid {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-        }
-
-        .gift-item {
-            background: rgba(212, 175, 55, 0.1);
-            border: 1px solid #d4af37;
-            border-radius: 15px;
-            padding: 15px;
-            cursor: pointer;
-            width: 30%;
-            transition: all 0.3s;
-        }
-
-        .gift-item:hover {
-            transform: translateY(-5px);
-            background: rgba(212, 175, 55, 0.25);
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
-        }
-
-        .gift-icon { font-size: 30px; }
-        .gift-label { font-size: 0.75rem; color: #ffe600; margin-top: 5px; }
-
-        /* Popup Modal Kado */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(8px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: #1e0a28;
-            border: 2px solid #d4af37;
-            padding: 25px;
-            border-radius: 20px;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
-            animation: popModal 0.4s ease;
-        }
-
-        @keyframes popModal {
-            0% { transform: scale(0.7); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+        .slide { min-width: 100%; height: 230px; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
 
         /* Typewriter Box */
         .message-text {
             font-size: 0.95rem;
             line-height: 1.7;
             color: #f3e5f5;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.35);
             padding: 18px;
             border-radius: 15px;
             border-left: 3px solid #d4af37;
@@ -300,7 +270,33 @@
             min-height: 90px;
         }
 
-        /* Form Wishbook */
+        /* 4 Kado Mini Bertema */
+        .gifts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .gift-item {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid #d4af37;
+            border-radius: 15px;
+            padding: 15px 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .gift-item:hover {
+            transform: translateY(-5px);
+            background: rgba(212, 175, 55, 0.25);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .gift-icon { font-size: 32px; }
+        .gift-label { font-size: 0.8rem; color: #ffe600; margin-top: 5px; font-weight: 600; }
+
+        /* Wishbook */
         .wishbook {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(212, 175, 55, 0.2);
@@ -328,11 +324,11 @@
             color: #000;
             font-weight: 600;
             border: none;
-            padding: 10px 22px;
+            padding: 10px 24px;
             border-radius: 25px;
             cursor: pointer;
             font-size: 0.9rem;
-            margin-top: 10px;
+            margin-top: 12px;
             box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
             transition: all 0.3s;
         }
@@ -353,38 +349,81 @@
             font-size: 0.85rem;
         }
 
-        #youtube-player {
-            position: absolute;
-            width: 1px; height: 1px;
-            opacity: 0; pointer-events: none;
+        /* Modal Dialog Kado Rahasia */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
+
+        .modal-content {
+            background: #1e0a28;
+            border: 2px solid #d4af37;
+            padding: 25px;
+            border-radius: 20px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
+            animation: popIn 0.4s ease;
+        }
+
+        #youtube-player { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
     </style>
 </head>
 <body>
 
-    <!-- Hidden YouTube Audio -->
+    <!-- Hidden YouTube Audio Player -->
     <div id="youtube-player"></div>
 
-    <!-- Sparkle Particles Background -->
+    <!-- Background Sparkles -->
     <div id="sparkle-container"></div>
 
-    <!-- 1. OVERLAY KADO KEJUTAN UTAMA -->
-    <div id="gift-overlay" onclick="startExperience()">
-        <div class="luxury-box">🎁</div>
-        <div class="overlay-title">A Special Gift For You</div>
-        <div class="overlay-subtitle">Ketuk kado di atas untuk membuka kejutan ✨</div>
+    <!-- ========================================================= -->
+    <!-- TAHAP 1: SCREEN TIUP LILIN UTAMA                          -->
+    <!-- ========================================================= -->
+    <div id="candle-screen">
+        <div class="candle-title">Make a Wish ✨</div>
+        <div class="candle-subtitle">Ketuk lilin di bawah untuk meniupnya! 🌬️</div>
+
+        <div style="margin-top: 40px;" class="cake-wrapper" onclick="blowCandleMain()">
+            <span id="mainFlame" class="flame-active">🔥</span>
+            <span id="mainSmoke" class="smoke">💨</span>
+            🎂
+        </div>
     </div>
 
-    <!-- 2. KARTU UTAMA ELEGAN -->
+    <!-- ========================================================= -->
+    <!-- POPUP KADO UTAMA (MUNCUL SETELAH TIUP LILIN)             -->
+    <!-- ========================================================= -->
+    <div id="gift-popup-modal">
+        <div class="popup-card">
+            <div style="color: #ffd700; font-size: 1.3rem; font-family: 'Playfair Display', serif;">Lilin Berhasil Ditiup! 🎉</div>
+            <p style="font-size: 0.85rem; color: #e0b0ff; margin: 10px 0 20px 0;">Ada kado spesial menunggumu. Buka sekarang!</p>
+            
+            <div class="big-gift-icon" onclick="openMainGift()">🎁</div>
+            
+            <button class="luxury-btn" style="margin-top: 20px;" onclick="openMainGift()">Buka Kado Spesial ✨</button>
+        </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- TAHAP 2: KARTU UTAMA DENGAN ALBUM & KEJUTAN              -->
+    <!-- ========================================================= -->
     <div class="main-card" id="mainCard">
         
         <!-- Foto Profile Utama -->
-        <!-- Ganti URL di src dengan foto temanmu -->
         <div class="avatar-frame">
-            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" alt="Birthday Person">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" alt="Foto Teman">
         </div>
 
-        <h1 classtitle">Happy Birthday! 🎉</h1>
+        <h1 class="title">Happy Birthday! 🎉</h1>
         <p style="color: #d4af37; font-style: italic; font-size: 0.9rem;">Wishing you a day as extraordinary as you are ✨</p>
 
         <!-- ALBUM FOTO AUTO-SCROLL -->
@@ -393,42 +432,36 @@
             <div class="slider-container">
                 <div class="slider-track" id="sliderTrack">
                     <!-- ========================================================= -->
-                    <!-- LOKASI DAFTAR FOTO ALBUM (Ganti link src di bawah)       -->
+                    <!-- MASUKKAN LINK FOTO ALBUM DI SINI                         -->
                     <!-- ========================================================= -->
-                    <div class="slide"><img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80" alt="Slide 1"></div>
-                    <div class="slide"><img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=600&q=80" alt="Slide 2"></div>
-                    <div class="slide"><img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80" alt="Slide 3"></div>
+                    <div class="slide"><img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80" alt="Memory 1"></div>
+                    <div class="slide"><img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=600&q=80" alt="Memory 2"></div>
+                    <div class="slide"><img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80" alt="Memory 3"></div>
                 </div>
-            </div>
-        </div>
-
-        <!-- SESI TIUP LILIN -->
-        <div class="cake-area" onclick="blowCandle()">
-            <div class="cake-icon">
-                <span id="flame" class="flame-anim">🔥</span>🎂
-            </div>
-            <div id="cakeHint" style="font-size: 0.8rem; color: #ffd700; margin-top: 5px;">
-                ✨ Ketuk kue untuk meniup lilinnya! 🌬️
             </div>
         </div>
 
         <!-- UCAPAN TYPEWRITER -->
         <div class="message-text" id="typewriterText"></div>
 
-        <!-- 3 KOTAK KADO KEJUTAN (MYSTERY GIFTS) -->
-        <div style="font-size: 0.85rem; color: #d4af37; margin-top: 15px;">🎁 Buka 3 Kado Rahasia Ini:</div>
+        <!-- 4 KADO MINI BERBEDA -->
+        <div style="font-size: 0.85rem; color: #d4af37; margin-top: 15px;">🎁 Buka 4 Kado Rahasia Ini:</div>
         <div class="gifts-grid">
-            <div class="gift-item" onclick="openGiftModal(1)">
+            <div class="gift-item" onclick="openMiniGift(1)">
                 <div class="gift-icon">💎</div>
                 <div class="gift-label">Kado #1</div>
             </div>
-            <div class="gift-item" onclick="openGiftModal(2)">
-                <div class="gift-icon">📜</div>
+            <div class="gift-item" onclick="openMiniGift(2)">
+                <div class="gift-icon">💌</div>
                 <div class="gift-label">Kado #2</div>
             </div>
-            <div class="gift-item" onclick="openGiftModal(3)">
+            <div class="gift-item" onclick="openMiniGift(3)">
                 <div class="gift-icon">👑</div>
                 <div class="gift-label">Kado #3</div>
+            </div>
+            <div class="gift-item" onclick="openMiniGift(4)">
+                <div class="gift-icon">🌟</div>
+                <div class="gift-label">Kado #4</div>
             </div>
         </div>
 
@@ -441,7 +474,7 @@
         </div>
     </div>
 
-    <!-- MODAL POPUP KEJUTAN -->
+    <!-- MODAL DIALOG KADO RAHASIA MINI -->
     <div class="modal" id="giftModal">
         <div class="modal-content">
             <div id="modalIcon" style="font-size: 50px;">🎁</div>
@@ -451,11 +484,11 @@
         </div>
     </div>
 
-    <!-- YouTube API -->
+    <!-- YouTube API Script -->
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
-        // 1. YouTube Player Integration
+        // 1. YouTube Audio Setup
         let player;
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
@@ -464,18 +497,38 @@
             });
         }
 
-        // 2. TEKS UCAPAN TYPEWRITER (Ubah Teks di Sini)
-        const greetingText = "Selamat Ulang Tahun! ✨\n\nDi hari istimewa ini, semoga setiap langkahmu selalu dikelilingi kebahagiaan, kedamaian, dan kesuksesan yang berlimpah. Terima kasih telah menjadi sosok yang luar biasa dan selalu membawa kehangatan. Enjoy your magical day! 🥂💖";
+        // 2. TEKS UCAPAN
+        const greetingText = "Selamat Ulang Tahun ya! ✨\n\nDi usia baru ini, semoga setiap langkahmu selalu dipenuhi kebahagiaan, kesehatan, dan keberhasilan yang melimpah. Makasih udah jadi teman yang luar biasa dan selalu membawa keceriaan! Enjoy your magical special day! 🎂💖";
 
-        // Buka Pengalaman Utama
-        function startExperience() {
-            document.getElementById('gift-overlay').style.display = 'none';
-            document.getElementById('mainCard').style.display = 'block';
+        // Meniup Lilin Utama
+        let candleIsBlown = false;
+        function blowCandleMain() {
+            if(candleIsBlown) return;
+            candleIsBlown = true;
 
+            // Memutar musik otomatis saat interaksi pertama
             if (player && player.playVideo) { player.playVideo(); }
 
+            // Animasi Tiup Lilin
+            document.getElementById('mainFlame').style.display = 'none';
+            document.getElementById('mainSmoke').style.display = 'block';
+
             triggerGoldConfetti();
-            setTimeout(triggerGoldConfetti, 800);
+            setTimeout(triggerGoldConfetti, 600);
+
+            // Tampilkan Pop-up Kado Utama
+            setTimeout(() => {
+                document.getElementById('gift-popup-modal').style.display = 'flex';
+            }, 1200);
+        }
+
+        // Buka Kado Utama setelah Tiup Lilin
+        function openMainGift() {
+            document.getElementById('candle-screen').style.display = 'none';
+            document.getElementById('gift-popup-modal').style.display = 'none';
+            document.getElementById('mainCard').style.display = 'block';
+
+            triggerGoldConfetti();
             startTypewriter();
             startAlbumAutoScroll();
         }
@@ -491,7 +544,7 @@
             }
         }
 
-        // Album Photo Auto Scroll Logic
+        // Album Auto Scroll
         let currentSlide = 0;
         function startAlbumAutoScroll() {
             const track = document.getElementById('sliderTrack');
@@ -499,48 +552,34 @@
             setInterval(() => {
                 currentSlide = (currentSlide + 1) % totalSlides;
                 track.style.transform = `translateX(-${currentSlide * 100}%)`;
-            }, 3000); // Berganti setiap 3 detik
+            }, 3000);
         }
 
-        // Blow Candle Logic
-        let candleOut = false;
-        function blowCandle() {
-            const flame = document.getElementById('flame');
-            const hint = document.getElementById('cakeHint');
-            if(!candleOut) {
-                flame.style.display = 'none';
-                hint.innerText = "Yayy! Lilin padam! Semoga semua doamu terkabul! 🤲✨";
-                hint.style.color = "#a8ffb2";
-                candleOut = true;
-                triggerGoldConfetti();
-            } else {
-                flame.style.display = 'block';
-                hint.innerText = "✨ Ketuk kue untuk meniup lilinnya! 🌬️";
-                hint.style.color = "#ffd700";
-                candleOut = false;
-            }
-        }
-
-        // Isi Pesan 3 Kado Kejutan (Ubah Isi Pesan di Sini)
+        // Isi 4 Kado Mini Bertema
         const giftData = {
             1: {
                 icon: "💎",
-                title: "Voucher / Doa Spesial",
-                text: "Kamu berhak mendapatkan kebahagiaan penuh sepanjang tahun ini! (Plus voucher makan/ngopi bareng bebas pilih tempat! ☕🍰)"
+                title: "Voucher Kebahagiaan",
+                text: "Kamu berhak mendapakan hari yang penuh tawa & treat makanan/traktiran ngopi bebas pilih tempat! ☕🍰"
             },
             2: {
-                icon: "📜",
-                title: "Catatan Rahasia",
-                text: "Ingat ya, di setiap masa sulit atau lelah, kamu selalu punya teman yang siap bantu dan dengerin cerita kamu! Stay awesome! ✨"
+                icon: "💌",
+                title: "Pesan Rahasia Sahabat",
+                text: "Makasih ya udah selalu ada dan bisa diandalin. Kamu sosok yang sangat berharga buat orang-orang di sekitarmu! ✨"
             },
             3: {
                 icon: "👑",
-                title: "Mahkota Kebahagiaan",
-                text: "Semoga di usia yang baru ini, kamu makin bersinar, makin dewasa, dan semua impian besarmu tercapai satu per satu! 🌟"
+                title: "Mahkota Harapan",
+                text: "Semoga semua cita-cita besar yang kamu impikan bisa terwujud satu per satu di tahun ini. Tetap semangat & percaya diri! 🌟"
+            },
+            4: {
+                icon: "🌟",
+                title: "Janji Kebersamaan",
+                text: "Semoga pertemanan kita makin awet, makin kompak, dan makin banyak momen seru yang bisa kita lewati bareng-bareng! 🎉"
             }
         };
 
-        function openGiftModal(id) {
+        function openMiniGift(id) {
             const data = giftData[id];
             document.getElementById('modalIcon').innerText = data.icon;
             document.getElementById('modalTitle').innerText = data.title;
@@ -553,31 +592,31 @@
             document.getElementById('giftModal').style.display = 'none';
         }
 
-        // Form Wish
+        // Submit Wish Form
         function submitWish() {
             const val = document.getElementById('wishInput').value;
             const res = document.getElementById('wishDisplay');
             if(val.trim() !== "") {
                 res.style.display = 'block';
-                res.innerHTML = "🌟 <b>Harapanmu Telah Terabadikan:</b><br>\"" + val + "\"<br><small>Semoga dikabulkan secepatnya! 🤲✨</small>";
+                res.innerHTML = "🌟 <b>Harapanmu Tersimpan:</b><br>\"" + val + "\"<br><small>Aamiin... Semoga dikabulkan secepatnya! 🤲✨</small>";
                 document.getElementById('wishInput').value = "";
                 triggerGoldConfetti();
             }
         }
 
-        // Sparkle Confetti Effect
+        // Confetti Effect
         function triggerGoldConfetti() {
             confetti({
-                particleCount: 100,
+                particleCount: 110,
                 spread: 90,
                 origin: { y: 0.6 },
                 colors: ['#ffd700', '#ff69b4', '#ffffff', '#e0b0ff']
             });
         }
 
-        // Create Ambient Background Sparkles
+        // Background Sparkles
         const sparkleContainer = document.getElementById('sparkle-container');
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 28; i++) {
             let el = document.createElement('div');
             el.className = 'sparkle';
             el.style.left = Math.random() * 100 + 'vw';
