@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selamat Ulang Tahun!</title>
+    <title>Happy Birthday! 🎉✨</title>
+
+    <!-- Canvas Confetti Library (Untuk Efek Pesta Kembang Api) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
-        /* --- GAYA / CSS --- */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -13,186 +19,336 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
             overflow-x: hidden;
-            color: #333;
+            padding: 20px;
         }
 
-        /* Container Utama Card */
-        .container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-            text-align: center;
-            max-width: 500px;
-            width: 100%;
-            position: relative;
-            z-index: 10;
-            animation: fadeIn 1.5s ease-in-out;
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        /* Foto Ulang Tahun */
-        .profile-img {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid #ff6b81;
-            box-shadow: 0 5px 15px rgba(255, 107, 129, 0.4);
-            margin-bottom: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        .profile-img:hover {
-            transform: scale(1.05) rotate(3deg);
-        }
-
-        /* Judul & Teks */
-        h1 {
-            color: #ff4757;
-            margin-bottom: 10px;
-            font-size: 2rem;
-        }
-
-        .message {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #555;
-            margin-bottom: 25px;
-            white-space: pre-line; /* Agar enter pada teks terbaca */
-        }
-
-        /* Tombol Kejutan / Musik */
-        .btn {
-            background-color: #ff4757;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 1rem;
-            border-radius: 25px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3);
-            transition: background 0.3s, transform 0.2s;
-        }
-
-        .btn:hover {
-            background-color: #ff6b81;
-            transform: translateY(-2px);
-        }
-
-        /* Teks Kejutan Tersembunyi */
-        .surprise {
-            display: none;
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #ffeaa7;
-            border-radius: 10px;
-            color: #d63031;
-            font-weight: bold;
-            animation: popIn 0.5s ease;
-        }
-
-        /* Animasi Balon di Latar Belakang */
-        .balloon {
+        /* Float Elements (Balon & Bintang) */
+        .floating-item {
             position: absolute;
-            width: 50px;
-            height: 60px;
-            background-color: rgba(255, 107, 129, 0.7);
-            border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-            bottom: -100px;
-            animation: float 8s infinite linear;
+            user-select: none;
+            pointer-events: none;
+            animation: floatUp linear infinite;
             z-index: 1;
         }
 
-        .balloon::after {
-            content: "";
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Container Card Utama */
+        .card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 30px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 10;
+            border: 4px solid #ffffff;
+            transform: scale(0.95);
+            animation: cardBounce 1s ease forwards;
+        }
+
+        @keyframes cardBounce {
+            0% { transform: scale(0.5); opacity: 0; }
+            70% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+
+        /* Foto Ulang Tahun dengan Ring Glow */
+        .photo-wrapper {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px auto;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #ff4757;
+            box-shadow: 0 0 25px rgba(255, 71, 87, 0.6);
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 15px rgba(255, 71, 87, 0.5); transform: scale(1); }
+            100% { box-shadow: 0 0 30px rgba(255, 71, 87, 0.9); transform: scale(1.03); }
+        }
+
+        /* Judul */
+        h1 {
+            font-family: 'Fredoka One', cursive;
+            color: #ff4757;
+            font-size: 2.2rem;
+            text-shadow: 2px 2px 0px #ffeaa7;
+            margin-bottom: 10px;
+            animation: wiggle 3s ease-in-out infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        /* Animasi Kue & Lilin Interaktif */
+        .cake-container {
+            margin: 20px 0;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .cake {
+            font-size: 70px;
+            position: relative;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .cake:hover {
+            transform: scale(1.1);
+        }
+
+        .flame {
             position: absolute;
-            bottom: -12px;
-            left: 23px;
-            width: 2px;
-            height: 15px;
-            background-color: #888;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 25px;
+            animation: flicker 0.6s infinite alternate;
         }
 
-        /* Keyframes Animasi */
-        @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
+        @keyframes flicker {
+            0% { opacity: 1; transform: translateX(-50%) scale(1); }
+            100% { opacity: 0.7; transform: translateX(-50%) scale(1.2); }
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .candle-hint {
+            font-size: 0.8rem;
+            color: #888;
+            margin-top: -10px;
+            margin-bottom: 15px;
         }
 
-        @keyframes popIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+        /* Teks Ucapan */
+        .message {
+            font-size: 1.05rem;
+            color: #2d3436;
+            line-height: 1.6;
+            min-height: 80px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.6);
+            padding: 15px;
+            border-radius: 15px;
+            border: 2px dashed #ff7675;
+        }
+
+        /* Tombol Interaktif */
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #ff4757, #ff6b81);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.6);
+        }
+
+        .btn-music {
+            background: linear-gradient(45deg, #1dd1a1, #10ac84);
+            box-shadow: 0 5px 15px rgba(29, 209, 161, 0.4);
+        }
+
+        .btn-music:hover {
+            box-shadow: 0 8px 20px rgba(29, 209, 161, 0.6);
+        }
+
+        /* Modal / Pesan Rahasia */
+        .secret-box {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #ffeaa7;
+            border-radius: 15px;
+            color: #d63031;
+            font-weight: 600;
+            animation: popUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popUp {
+            0% { opacity: 0; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Balon Hiasan -->
-    <div class="balloon" style="left: 10%; animation-delay: 0s; background-color: #ff7675;"></div>
-    <div class="balloon" style="left: 30%; animation-delay: 2s; background-color: #74b9ff;"></div>
-    <div class="balloon" style="left: 50%; animation-delay: 4s; background-color: #55efc4;"></div>
-    <div class="balloon" style="left: 70%; animation-delay: 1s; background-color: #ffeaa7;"></div>
-    <div class="balloon" style="left: 85%; animation-delay: 3s; background-color: #a29bfe;"></div>
+    <!-- Latar Belakang Elemen Melayang -->
+    <div id="floating-container"></div>
 
-    <!-- Container Konten Utama -->
-    <div class="container">
+    <div class="card">
         
-        <!-- ==================================================== -->
-        <!-- 1. LOKASI UBAH FOTO (Ganti link URL di dalam src="") -->
-        <!-- ==================================================== -->
-        <img class="profile-img" 
-             src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" 
-             alt="Foto Teman">
-
-        <!-- ==================================================== -->
-        <!-- 2. LOKASI UBAH NAMA & JUDUL                          -->
-        <!-- ==================================================== -->
-        <h1>Happy Birthday! 🎉</h1>
-
-        <!-- ==================================================== -->
-        <!-- 3. LOKASI UBAH UCAPAN Ulang Tahun                   -->
-        <!-- ==================================================== -->
-        <p class="message">
-            Selamat ulang tahun ya! 🥳✨
-            Semoga di usiamu yang baru ini, kamu semakin bahagia, sehat selalu, dan semua impianmu bisa tercapai.
-
-            Makasih udah jadi teman yang luar biasa selama ini. Enjoy your special day! 🎂🎈
-        </p>
-
-        <!-- Tombol Interaktif -->
-        <button class="btn" onclick="tampilkanKejutan()">Klik untuk Kejutan! 🎁</button>
-
-        <!-- ==================================================== -->
-        <!-- 4. LOKASI UBAH PESAN KEJUTAN / RAHASIA               -->
-        <!-- ==================================================== -->
-        <div id="surprise-text" class="surprise">
-            Pesan Tambahan: Jangan lupa makan-makan & traktirannya ya! 🍕🍰😆
+        <!-- ========================================================= -->
+        <!-- 1. LOKASI FOTO (Ganti Link Gambar di dalam src="")         -->
+        <!-- ========================================================= -->
+        <div class="photo-wrapper">
+            <img class="profile-img" 
+                 src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" 
+                 alt="Foto Ulang Tahun">
         </div>
 
+        <!-- ========================================================= -->
+        <!-- 2. LOKASI UBAH NAMA                                       -->
+        <!-- ========================================================= -->
+        <h1>Happy Birthday! 🎉</h1>
+
+        <!-- Interactive Cake -->
+        <div class="cake-container" onclick="tiupLilin()">
+            <div class="cake">
+                <span id="flame" class="flame">🔥</span>
+                🎂
+            </div>
+            <div class="candle-hint">(Klik kue untuk tiup lilinya! 🌬️)</div>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- 3. LOKASI UBAH UCAPAN KETIK (Diubah di bagian JavaScript)  -->
+        <!-- ========================================================= -->
+        <div class="message" id="typewriter-text"></div>
+
+        <div class="btn-group">
+            <button class="btn btn-music" onclick="toggleMusic()">🎵 Putar Lagu Ulang Tahun</button>
+            <button class="btn" onclick="sebarConfetti(); tampilkanRahasia();">🎁 Buka Pesan Kejutan!</button>
+        </div>
+
+        <!-- ========================================================= -->
+        <!-- 4. LOKASI PESAN RAHASIA                                   -->
+        <!-- ========================================================= -->
+        <div id="secret-message" class="secret-box">
+            💌 **Pesan Rahasia:** Makasih udah selalu ada ya! Jangan lupa traktirannya ditunggu minggu ini! 🍕🧋😆
+        </div>
     </div>
 
-    <!-- JavaScript Interaktif -->
+    <!-- Audio Musik Ulang Tahun (Instrumen Ceria) -->
+    <audio id="hbd-song" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8c8a7315b.mp3?filename=happy-birthday-15220.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
-        function tampilkanKejutan() {
-            var surpriseDiv = document.getElementById("surprise-text");
-            if (surpriseDiv.style.display === "block") {
-                surpriseDiv.style.display = "none";
-            } else {
-                surpriseDiv.style.display = "block";
+        // =========================================================
+        // TEKS UCAPAN DENGAN EFEK MENGETIK (UBAH DI SINI)
+        // =========================================================
+        const ucapanTeks = "Selamat Ulang Tahun ya! 🥳✨\nSemoga panjang umur, sehat selalu, makin sukses, dan semua cita-citamu bisa terwujud tahun ini. Makasih udah jadi temen yang selalu ada dan bisa diandelin! Enjoy your special day! 🎂🎈";
+
+        let index = 0;
+        function typeWriter() {
+            if (index < ucapanTeks.length) {
+                let char = ucapanTeks.charAt(index);
+                document.getElementById("typewriter-text").innerHTML += char === '\n' ? '<br>' : char;
+                index++;
+                setTimeout(typeWriter, 40);
             }
+        }
+        window.onload = () => {
+            typeWriter();
+            sebarConfetti();
+        };
+
+        // Efek Tiup Lilin
+        let lilinPadam = false;
+        function tiupLilin() {
+            const flame = document.getElementById('flame');
+            if(!lilinPadam) {
+                flame.style.display = 'none';
+                lilinPadam = true;
+                sebarConfetti();
+                alert("Horeee! Lilinnya mati! Semoga semua doa dan harapanmu terkabul ya! 🤲✨");
+            } else {
+                flame.style.display = 'block';
+                lilinPadam = false;
+            }
+        }
+
+        // Efek Musik
+        const audio = document.getElementById("hbd-song");
+        let isPlaying = false;
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+            } else {
+                audio.play();
+                isPlaying = true;
+                sebarConfetti();
+            }
+        }
+
+        // Efek Hujan Confetti / Kembang Api Kertas
+        function sebarConfetti() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+
+        // Tampilkan Pesan Rahasia
+        function tampilkanRahasia() {
+            const secretBox = document.getElementById("secret-message");
+            if (secretBox.style.display === "block") {
+                secretBox.style.display = "none";
+            } else {
+                secretBox.style.display = "block";
+            }
+        }
+
+        // Generate Balon & Emoji Melayang Latar Belakang
+        const container = document.getElementById('floating-container');
+        const items = ['🎈', '✨', '💖', '🎁', '⭐', '🌸'];
+        for (let i = 0; i < 20; i++) {
+            let div = document.createElement('div');
+            div.className = 'floating-item';
+            div.innerText = items[Math.floor(Math.random() * items.length)];
+            div.style.left = Math.random() * 100 + 'vw';
+            div.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            div.style.animationDelay = Math.random() * 5 + 's';
+            div.style.fontSize = (Math.random() * 20 + 20) + 'px';
+            container.appendChild(div);
         }
     </script>
 </body>
