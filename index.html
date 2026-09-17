@@ -244,26 +244,134 @@
             margin-top: 5px;
         }
 
-        /* SECTION 2: GIFT INTERACTIVE */
-        .gift-box-wrapper {
+        /* SECTION 2: LUXURY GIFT BOX */
+        .gift-box-container {
             position: relative;
-            margin: 40px 0;
+            width: 160px;
+            height: 160px;
+            margin: 50px auto 35px auto;
             cursor: pointer;
+            perspective: 1000px;
         }
 
-        .gift-emoji {
-            font-size: 110px;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            animation: floatGift 3s infinite ease-in-out;
+        .luxury-gift-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #2c211b 0%, #1a1310 100%);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(198, 160, 125, 0.15);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .gift-box-wrapper:hover .gift-emoji {
-            transform: scale(1.25) rotate(10deg);
+        .gift-lid {
+            position: absolute;
+            top: -12px;
+            left: -8px;
+            width: 176px;
+            height: 35px;
+            background: linear-gradient(135deg, #3a2d26 0%, #221814 100%);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            transition: all 0.5s ease;
+            z-index: 3;
         }
 
-        @keyframes floatGift {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-18px) rotate(-3deg); }
+        .ribbon-v, .ribbon-h {
+            position: absolute;
+            background: linear-gradient(90deg, #b8860b, #d4af37, #f3e5ab, #d4af37, #b8860b);
+            box-shadow: 0 0 8px rgba(212, 175, 55, 0.5);
+        }
+
+        .gift-box-container .ribbon-v {
+            width: 24px;
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .gift-box-container .ribbon-h {
+            width: 100%;
+            height: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .gift-lid .ribbon-v {
+            width: 24px;
+            height: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+        }
+
+        .gift-bow {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 30px;
+            z-index: 5;
+        }
+
+        .bow-left, .bow-right {
+            position: absolute;
+            width: 32px;
+            height: 25px;
+            border: 3px solid #d4af37;
+            border-radius: 50% 50% 0 50%;
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+        }
+
+        .bow-left {
+            left: 0;
+            transform: rotate(-20deg);
+        }
+
+        .bow-right {
+            right: 0;
+            transform: scaleX(-1) rotate(-20deg);
+        }
+
+        .bow-center {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 14px;
+            height: 14px;
+            background: #f3e5ab;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #d4af37;
+            z-index: 6;
+        }
+
+        .gift-box-container:hover .luxury-gift-box {
+            transform: translateY(5px) scale(1.02);
+            box-shadow: 0 20px 45px rgba(198, 160, 125, 0.3), 0 0 35px rgba(212, 175, 55, 0.4);
+        }
+
+        .gift-box-container:hover .gift-lid {
+            transform: translateY(-8px) rotate(-3deg);
+        }
+
+        .gift-sparkle {
+            position: absolute;
+            color: #d4af37;
+            font-size: 14px;
+            pointer-events: none;
+            animation: sparkleFloat 2s infinite ease-in-out;
+        }
+
+        @keyframes sparkleFloat {
+            0%, 100% { opacity: 0.3; transform: scale(0.8) translateY(0); }
+            50% { opacity: 1; transform: scale(1.2) translateY(-10px); }
         }
 
         /* SECTION 3: LANDING POLAROIDS SURROUNDING */
@@ -584,14 +692,34 @@
         </button>
     </div>
 
-    <!-- ================= SECTION 2: OPEN GIFT ================= -->
+    <!-- ================= SECTION 2: OPEN GIFT (LUXURY DESIGN) ================= -->
     <div class="section-container" id="sec-gift">
-        <div class="sub-title">✨ ADA SESUATU UNTUKMU ✨</div>
-        <div class="gift-box-wrapper" onclick="nextSection('sec-gift', 'sec-landing')">
-            <div class="gift-emoji">🎁</div>
+        <div class="sub-title">✨ A SPECIAL PRESENT FOR YOU ✨</div>
+        
+        <div class="gift-box-container" onclick="nextSection('sec-gift', 'sec-landing')">
+            <div class="gift-sparkle" style="top: -20px; left: -10px; animation-delay: 0s;">✦</div>
+            <div class="gift-sparkle" style="top: -10px; right: -15px; animation-delay: 0.5s;">✨</div>
+            <div class="gift-sparkle" style="bottom: -10px; left: -15px; animation-delay: 1s;">✨</div>
+            <div class="gift-sparkle" style="bottom: -15px; right: -10px; animation-delay: 1.5s;">✦</div>
+
+            <div class="gift-bow">
+                <div class="bow-left"></div>
+                <div class="bow-right"></div>
+                <div class="bow-center"></div>
+            </div>
+
+            <div class="gift-lid">
+                <div class="ribbon-v"></div>
+            </div>
+
+            <div class="luxury-gift-box">
+                <div class="ribbon-v"></div>
+                <div class="ribbon-h"></div>
+            </div>
         </div>
+
         <button class="glow-btn" onclick="nextSection('sec-gift', 'sec-landing')">
-            ✨ Klik untuk membuka kadomu ✨
+            ✨ BUKA KADO MEWAHMU ✨
         </button>
     </div>
 
@@ -809,9 +937,10 @@
             cdSecs.innerText = String(seconds).padStart(2, '0');
         }, 1000);
 
-        // 3. YouTube API Control
+        // 3. YouTube API Control & User Mute State Tracking
         let player;
         let isPlaying = false;
+        let userHasMuted = false; // Melacak apakah pengguna secara manual melakukan mute/pause
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('ytPlayer', {
@@ -823,7 +952,7 @@
         }
 
         function onPlayerReady(event) {
-            // Player is ready
+            // Player ready
         }
 
         function onPlayerStateChange(event) {
@@ -843,8 +972,10 @@
             if (!player) return;
             if (isPlaying) {
                 player.pauseVideo();
+                userHasMuted = true; // Ditandai bahwa user dengan sengaja mematikan lagu
             } else {
                 player.playVideo();
+                userHasMuted = false; // Ditandai bahwa user menyalakan kembali lagu
             }
         }
 
@@ -890,9 +1021,10 @@
             });
         }
 
-        // 6. Navigation Between Sections
+        // 6. Navigation Between Sections (Menjaga status mute saat pindah halaman)
         function nextSection(currentId, nextId) {
-            if (player && typeof player.playVideo === 'function' && !isPlaying) {
+            // Hanya jalankan lagu secara otomatis jika user BELUM pernah menekan tombol mute
+            if (player && typeof player.playVideo === 'function' && !isPlaying && !userHasMuted) {
                 player.playVideo();
             }
 
