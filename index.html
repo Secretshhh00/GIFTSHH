@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Royal Birthday Magical Celebration ✨</title>
 
-    <!-- Canvas Confetti & Google Fonts -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -35,9 +34,41 @@
             justify-content: center;
             align-items: center;
             overflow-x: hidden;
-            padding: 20px 12px;
+            padding: 20px 12px 120px 12px; /* Bottom padding disesuaikan agar tidak tertutup lantai dance */
             color: #f3e5f5;
             position: relative;
+        }
+
+        /* ---------------------------------------------------- */
+        /* STAGE FLOOR & DANCING KARATEKA GUY                   */
+        /* ---------------------------------------------------- */
+        .floor {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 96px;
+            background-color: #2800b8;
+            box-shadow: 0 -8px 25px rgba(0, 255, 255, 0.4);
+            z-index: 99;
+        }
+
+        .woot-dance {
+            position: fixed;
+            bottom: 0;
+            transform: translateX(-100px);
+            animation: dance linear 10s infinite alternate;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        @keyframes dance {
+            0% {
+                transform: translateX(-100px);
+            }
+            100% {
+                transform: translateX(calc(100vw - (290px)));
+            }
         }
 
         /* ---------------------------------------------------- */
@@ -260,6 +291,7 @@
             text-align: center;
             position: relative;
             z-index: 10;
+            margin-bottom: 80px;
             animation: cardAppear 1s ease forwards, neonBorderPulse 3s infinite alternate;
         }
 
@@ -495,21 +527,18 @@
 </head>
 <body>
 
-    <!-- Stage Lighting Atmosphere -->
+    <div class="floor"></div>
+    <img src="https://i.imgur.com/pXALzSc.gif" class="woot-dance" width="328" height="272" alt="8-bit dancing Karateka guy">
+
     <div class="stage-lighting">
         <div class="spotlight cyan"></div>
         <div class="spotlight magenta"></div>
     </div>
 
-    <!-- Hidden YouTube Audio Player -->
     <div id="youtube-player"></div>
 
-    <!-- Background Sparkles -->
     <div id="sparkle-container"></div>
 
-    <!-- ========================================================= -->
-    <!-- TAHAP 1: SCREEN TIUP LILIN UTAMA                          -->
-    <!-- ========================================================= -->
     <div id="candle-screen">
         <div class="candle-title">Make a Wish ✨</div>
         <div class="candle-subtitle">Tiup atau ketuk lilinnya untuk memulai kejutan! 🌬️</div>
@@ -523,9 +552,6 @@
         <div class="hint-badge">👆 SENTUH LILIN DI ATAS</div>
     </div>
 
-    <!-- ========================================================= -->
-    <!-- POPUP KADO UTAMA (MUNCUL SETELAH TIUP LILIN)              -->
-    <!-- ========================================================= -->
     <div id="gift-popup-modal">
         <div class="popup-card">
             <div style="color: #ffd700; font-size: 1.4rem; font-family: 'Cinzel', serif;">LILIN BERHASIL DITIUP! 🎉</div>
@@ -539,12 +565,8 @@
         </div>
     </div>
 
-    <!-- ========================================================= -->
-    <!-- TAHAP 2: KARTU UTAMA DENGAN ALBUM & KEJUTAN               -->
-    <!-- ========================================================= -->
     <div class="main-card" id="mainCard">
         
-        <!-- Foto Profile Utama -->
         <div class="avatar-frame">
             <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80" alt="Foto Teman">
         </div>
@@ -557,7 +579,6 @@
             <span>🎵 Playing Birthday Serenade</span>
         </div>
 
-        <!-- ALBUM FOTO AUTO-SCROLL -->
         <div class="album-section">
             <div class="section-header">📸 Precious Moments & Memories</div>
             <div class="slider-container">
@@ -569,10 +590,8 @@
             </div>
         </div>
 
-        <!-- UCAPAN TYPEWRITER -->
         <div class="message-text" id="typewriterText"></div>
 
-        <!-- 6 KADO MINI PREMIUM -->
         <div class="section-header" style="margin-top: 25px;">🎁 Buka 6 Kado Rahasia Kamu:</div>
         <div class="gifts-grid">
             <div class="gift-item" onclick="openMiniGift(1)">
@@ -601,7 +620,6 @@
             </div>
         </div>
 
-        <!-- FORM WISHBOOK -->
         <div class="wishbook">
             <div style="color: #d4af37; font-size: 0.92rem; font-weight: 600;">✨ Wishbook Ulang Tahun</div>
             <textarea id="wishInput" placeholder="Tuliskan harapan & doamu yang paling indah di sini..."></textarea>
@@ -610,7 +628,6 @@
         </div>
     </div>
 
-    <!-- MODAL DIALOG KADO RAHASIA MINI -->
     <div class="modal" id="giftModal">
         <div class="modal-content">
             <div id="modalIcon" style="font-size: 55px; filter: drop-shadow(0 0 15px rgba(255,215,0,0.5));">🎁</div>
@@ -620,17 +637,9 @@
         </div>
     </div>
 
-    <!-- YouTube API Script -->
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
-        // Config Global & Setup Animation Logic
-        const stageConfig = {
-            characterPhysics: { squashAmount: 0.15, motionTrail: true },
-            lighting: { neonPulse: true, spotlights: true },
-            particles: { confettiShapes: ["star", "heart", "circle"] }
-        };
-
         // 1. YouTube Audio Setup
         let player;
         function onYouTubeIframeAPIReady() {
