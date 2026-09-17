@@ -16,6 +16,8 @@
             --purple-deep: #0e021a;
             --purple-card: rgba(26, 8, 42, 0.85);
             --pink-accent: #ff69b4;
+            --neon-cyan: #00ffff;
+            --neon-magenta: #ff00ff;
         }
 
         * {
@@ -35,6 +37,37 @@
             overflow-x: hidden;
             padding: 20px 12px;
             color: #f3e5f5;
+            position: relative;
+        }
+
+        /* ---------------------------------------------------- */
+        /* STAGE LIGHTING & ATMOSPHERE EFFECTS                  */
+        /* ---------------------------------------------------- */
+        .stage-lighting {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .spotlight {
+            position: absolute;
+            top: -20%;
+            width: 30vw;
+            height: 140vh;
+            background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 80%);
+            filter: blur(25px);
+            transform-origin: top center;
+            animation: spotlightBeam 4s infinite alternate ease-in-out;
+        }
+
+        .spotlight.cyan { left: 10%; background: linear-gradient(180deg, rgba(0,255,255,0.2) 0%, rgba(0,255,255,0) 80%); }
+        .spotlight.magenta { right: 10%; background: linear-gradient(180deg, rgba(255,0,255,0.2) 0%, rgba(255,0,255,0) 80%); animation-delay: -2s; }
+
+        @keyframes spotlightBeam {
+            0% { transform: rotate(-15deg); }
+            100% { transform: rotate(15deg); }
         }
 
         /* Particles Background */
@@ -218,8 +251,8 @@
             display: none;
             background: var(--purple-card);
             backdrop-filter: blur(18px);
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            box-shadow: 0 0 60px rgba(186, 85, 211, 0.3);
+            border: 2px solid var(--gold-secondary);
+            box-shadow: 0 0 60px rgba(186, 85, 211, 0.4), 0 0 30px rgba(0, 255, 255, 0.2);
             border-radius: 32px;
             padding: 38px 26px;
             max-width: 530px;
@@ -227,7 +260,13 @@
             text-align: center;
             position: relative;
             z-index: 10;
-            animation: cardAppear 1s ease forwards;
+            animation: cardAppear 1s ease forwards, neonBorderPulse 3s infinite alternate;
+        }
+
+        @keyframes neonBorderPulse {
+            0% { border-color: var(--gold-secondary); box-shadow: 0 0 40px rgba(212, 175, 55, 0.4); }
+            50% { border-color: var(--neon-cyan); box-shadow: 0 0 50px rgba(0, 255, 255, 0.5); }
+            100% { border-color: var(--neon-magenta); box-shadow: 0 0 50px rgba(255, 0, 255, 0.5); }
         }
 
         @keyframes cardAppear {
@@ -241,7 +280,7 @@
             margin: 0 auto 18px auto;
             border-radius: 50%;
             padding: 6px;
-            background: linear-gradient(45deg, #d4af37, #ff69b4, #ffe600, #d4af37);
+            background: linear-gradient(45deg, #d4af37, #ff69b4, #ffe600, #00ffff, #d4af37);
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.6);
             animation: rotateGlow 6s linear infinite;
         }
@@ -456,6 +495,12 @@
 </head>
 <body>
 
+    <!-- Stage Lighting Atmosphere -->
+    <div class="stage-lighting">
+        <div class="spotlight cyan"></div>
+        <div class="spotlight magenta"></div>
+    </div>
+
     <!-- Hidden YouTube Audio Player -->
     <div id="youtube-player"></div>
 
@@ -479,7 +524,7 @@
     </div>
 
     <!-- ========================================================= -->
-    <!-- POPUP KADO UTAMA (MUNCUL SETELAH TIUP LILIN)             -->
+    <!-- POPUP KADO UTAMA (MUNCUL SETELAH TIUP LILIN)              -->
     <!-- ========================================================= -->
     <div id="gift-popup-modal">
         <div class="popup-card">
@@ -495,7 +540,7 @@
     </div>
 
     <!-- ========================================================= -->
-    <!-- TAHAP 2: KARTU UTAMA DENGAN ALBUM & KEJUTAN              -->
+    <!-- TAHAP 2: KARTU UTAMA DENGAN ALBUM & KEJUTAN               -->
     <!-- ========================================================= -->
     <div class="main-card" id="mainCard">
         
@@ -517,9 +562,6 @@
             <div class="section-header">📸 Precious Moments & Memories</div>
             <div class="slider-container">
                 <div class="slider-track" id="sliderTrack">
-                    <!-- ========================================================= -->
-                    <!-- MASUKKAN LINK FOTO ALBUM DI SINI                         -->
-                    <!-- ========================================================= -->
                     <div class="slide"><img src="https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80" alt="Memory 1"></div>
                     <div class="slide"><img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=600&q=80" alt="Memory 2"></div>
                     <div class="slide"><img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80" alt="Memory 3"></div>
@@ -582,6 +624,13 @@
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <script>
+        // Config Global & Setup Animation Logic
+        const stageConfig = {
+            characterPhysics: { squashAmount: 0.15, motionTrail: true },
+            lighting: { neonPulse: true, spotlights: true },
+            particles: { confettiShapes: ["star", "heart", "circle"] }
+        };
+
         // 1. YouTube Audio Setup
         let player;
         function onYouTubeIframeAPIReady() {
@@ -715,7 +764,7 @@
                 particleCount: 120,
                 spread: 100,
                 origin: { y: 0.6 },
-                colors: ['#ffd700', '#ff69b4', '#ffffff', '#e0b0ff', '#ff4500']
+                colors: ['#ffd700', '#ff69b4', '#ffffff', '#e0b0ff', '#ff4500', '#00ffff']
             });
         }
 
