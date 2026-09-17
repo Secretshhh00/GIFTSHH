@@ -13,12 +13,13 @@
 
     <style>
         :root {
-            --bg-dark: #120c18;
-            --bg-card: rgba(30, 22, 40, 0.7);
-            --pink-accent: #f4c2c2;
-            --pink-light: #fce4ec;
-            --text-gold: #f7d6d0;
-            --border-glow: rgba(244, 194, 194, 0.3);
+            /* Theme Color: Elegant Warm Brown & Cream (No Neon / RGB) */
+            --bg-dark: #1f1815;
+            --bg-card: rgba(44, 35, 31, 0.85);
+            --brown-accent: #c6a07d;
+            --brown-light: #e8d8c8;
+            --text-gold: #d4af37;
+            --border-glow: rgba(198, 160, 125, 0.3);
         }
 
         * {
@@ -30,7 +31,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-dark);
-            color: #fff;
+            color: #f5f0eb;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -45,20 +46,20 @@
             top: 0; left: 0; width: 100vw; height: 100vh;
             pointer-events: none;
             z-index: 1;
-            background: radial-gradient(circle at center, rgba(60, 30, 70, 0.4) 0%, rgba(18, 12, 24, 0.95) 100%);
+            background: radial-gradient(circle at center, rgba(65, 48, 40, 0.5) 0%, rgba(31, 24, 21, 0.98) 100%);
         }
 
         .star {
             position: absolute;
-            background: #fff;
+            background: #e8d8c8;
             border-radius: 50%;
-            opacity: 0.5;
+            opacity: 0.4;
             animation: twinkle var(--duration) infinite ease-in-out;
         }
 
         @keyframes twinkle {
             0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 0.9; transform: scale(1.2); }
+            50% { opacity: 0.8; transform: scale(1.1); }
         }
 
         /* Container Sections */
@@ -88,7 +89,7 @@
             font-size: 0.85rem;
             letter-spacing: 4px;
             text-transform: uppercase;
-            color: var(--pink-accent);
+            color: var(--brown-accent);
             margin-bottom: 12px;
             font-weight: 300;
         }
@@ -99,7 +100,6 @@
             font-weight: 600;
             margin-bottom: 15px;
             color: #ffffff;
-            text-shadow: 0 0 20px rgba(244, 194, 194, 0.2);
         }
 
         .main-heading i {
@@ -110,16 +110,16 @@
 
         .desc-text {
             font-size: 0.9rem;
-            color: #ccc;
+            color: #d1c5b8;
             font-weight: 300;
             margin-bottom: 30px;
         }
 
         /* Buttons */
         .glow-btn {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(198, 160, 125, 0.1);
             border: 1px solid var(--border-glow);
-            color: #fff;
+            color: #f5f0eb;
             padding: 12px 28px;
             border-radius: 30px;
             font-size: 0.8rem;
@@ -134,9 +134,8 @@
         }
 
         .glow-btn:hover {
-            background: rgba(244, 194, 194, 0.2);
-            border-color: var(--pink-accent);
-            box-shadow: 0 0 15px rgba(244, 194, 194, 0.3);
+            background: rgba(198, 160, 125, 0.25);
+            border-color: var(--brown-accent);
             transform: translateY(-2px);
         }
 
@@ -161,13 +160,13 @@
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
             font-weight: 600;
-            color: var(--pink-accent);
+            color: var(--brown-accent);
         }
 
         .time-label {
             font-size: 0.7rem;
             letter-spacing: 2px;
-            color: #aaa;
+            color: #a89a8c;
             margin-top: 5px;
         }
 
@@ -180,7 +179,6 @@
 
         .gift-emoji {
             font-size: 110px;
-            filter: drop-shadow(0 0 25px rgba(244, 194, 194, 0.4));
             transition: transform 0.3s ease;
             animation: floatGift 3s infinite ease-in-out;
         }
@@ -207,10 +205,10 @@
         .floating-polaroid {
             position: absolute;
             width: 90px;
-            background: #fff;
+            background: #fcf9f5;
             padding: 6px 6px 18px 6px;
             border-radius: 4px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
             transform: rotate(var(--rot));
             transition: transform 0.3s ease;
         }
@@ -227,7 +225,6 @@
             z-index: 20;
         }
 
-        /* Position floating polaroids around central text */
         .p1 { top: 10%; left: 5%; --rot: -12deg; }
         .p2 { top: 50%; left: 2%; --rot: 8deg; }
         .p3 { bottom: 5%; left: 8%; --rot: -6deg; }
@@ -244,14 +241,14 @@
             text-align: left;
             backdrop-filter: blur(15px);
             max-width: 650px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
             margin-bottom: 25px;
         }
 
         .letter-card h3 {
             font-family: 'Playfair Display', serif;
             font-size: 1.4rem;
-            color: var(--pink-accent);
+            color: var(--brown-accent);
             margin-bottom: 20px;
             font-weight: 500;
         }
@@ -259,7 +256,7 @@
         .letter-card p {
             font-size: 0.92rem;
             line-height: 1.8;
-            color: #e0d5e5;
+            color: #e0d8d0;
             margin-bottom: 16px;
             font-weight: 300;
         }
@@ -274,10 +271,10 @@
         }
 
         .polaroid-card {
-            background: #fff;
+            background: #fcf9f5;
             padding: 8px 8px 22px 8px;
             border-radius: 4px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
             transform: rotate(var(--r));
             transition: all 0.3s ease;
         }
@@ -301,7 +298,7 @@
             border-radius: 20px;
             overflow: hidden;
             border: 1px solid var(--border-glow);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             margin: 25px 0;
             background: #000;
         }
@@ -311,11 +308,21 @@
             display: block;
         }
 
+        /* Hidden YouTube Iframe Player */
+        #yt-player-container {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .main-heading { font-size: 2.2rem; }
             .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-            .floating-polaroid { display: none; } /* Hide decorative floating on small mobile */
+            .floating-polaroid { display: none; }
             .countdown-grid { gap: 10px; }
             .time-box { min-width: 70px; padding: 15px 10px; }
             .time-num { font-size: 1.8rem; }
@@ -327,10 +334,11 @@
     <!-- Background Stars -->
     <div class="stars-bg" id="starsBg"></div>
 
-    <!-- Audio Player (Ganti src dengan lagu favoritmu) -->
-    <audio id="bgMusic" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-    </audio>
+    <!-- Hidden YouTube Audio Player -->
+    <div id="yt-player-container">
+        <!-- Tempelkan ID Video YouTube kamu di parameter embed bawah ini pada bagian "VIDEO_ID_KAMU" -->
+        <iframe id="ytPlayer" src="https://www.youtube.com/embed/VIDEO_ID_KAMU?enablejsapi=1&autoplay=0&loop=1" allow="autoplay"></iframe>
+    </div>
 
     <!-- ================= SECTION 1: COUNTDOWN ================= -->
     <div class="section-container active" id="sec-countdown">
@@ -406,7 +414,7 @@
             <p>Terima kasih sudah selalu ada, udah bikin hari-hariku lebih bahagia, dan udah menjadi alasan aku tersenyum setiap hari. Aku bersyukur banget bisa kenal dan punya kamu sampai sekarang.</p>
             <p>Di umur yang baru ini, aku cuma mau doain semoga semua hal baik selalu datang ke hidup kamu sayang. Semoga sehat selalu, panjang umur, dipermudah segala urusannya, dan semua impian kamu bisa tercapai satu per satu.</p>
             <p>Tetap jadi pribadi yang kuat, baik, dan tulus seperti sekarang yaa. Jangan lupa kalau aku selalu ada buat kamu dalam keadaan apa pun.</p>
-            <p style="text-align: center; margin-top: 25px; color: var(--pink-accent); font-weight: 400;">
+            <p style="text-align: center; margin-top: 25px; color: var(--brown-accent); font-weight: 400;">
                 I love you, today, tomorrow, and always. 🤍
             </p>
         </div>
@@ -443,7 +451,6 @@
         <div class="sub-title">✨ A SPECIAL VIDEO MESSAGE ✨</div>
 
         <div class="video-box">
-            <!-- Ganti src video dengan file videomu -->
             <video controls poster="https://picsum.photos/600/400?random=20">
                 <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
             </video>
@@ -482,6 +489,9 @@
         </button>
     </div>
 
+    <!-- YouTube IFrame Player API -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
     <script>
         // 1. Generate Background Stars
         const starsBg = document.getElementById('starsBg');
@@ -496,8 +506,7 @@
             starsBg.appendChild(star);
         }
 
-        // 2. Countdown Logic (Atur Waktu Target)
-        // Set ke beberapa detik dari sekarang untuk demo
+        // 2. Countdown Logic
         let targetDate = new Date().getTime() + 10000; 
 
         const cdDays = document.getElementById('cd-days');
@@ -517,8 +526,8 @@
                 cdMins.innerText = "00";
                 cdSecs.innerText = "00";
                 btnCountdown.innerHTML = "✨ OPEN HER GIFT ✨";
-                btnCountdown.style.borderColor = "var(--pink-accent)";
-                btnCountdown.style.background = "rgba(244, 194, 194, 0.3)";
+                btnCountdown.style.borderColor = "var(--brown-accent)";
+                btnCountdown.style.background = "rgba(198, 160, 125, 0.3)";
                 return;
             }
 
@@ -533,12 +542,25 @@
             cdSecs.innerText = String(seconds).padStart(2, '0');
         }, 1000);
 
-        // 3. Navigation Between Sections
+        // 3. YouTube API Control
+        let player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('ytPlayer', {
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady(event) {
+            // Player is ready
+        }
+
+        // 4. Navigation Between Sections
         function nextSection(currentId, nextId) {
-            // Play Audio on First Click
-            const music = document.getElementById('bgMusic');
-            if (music.paused) {
-                music.play().catch(() => {});
+            // Putar musik YouTube pada klik pertama
+            if (player && typeof player.playVideo === 'function') {
+                player.playVideo();
             }
 
             const curr = document.getElementById(currentId);
@@ -550,7 +572,7 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }, 400);
 
-            // Fire Confetti on specific screens
+            // Confetti dengan warna earth-tone / brown & cream
             if (nextId === 'sec-landing' || nextId === 'sec-ending') {
                 fireConfetti();
             }
@@ -561,7 +583,7 @@
                 particleCount: 80,
                 spread: 70,
                 origin: { y: 0.6 },
-                colors: ['#f4c2c2', '#fce4ec', '#ffffff']
+                colors: ['#c6a07d', '#e8d8c8', '#ffffff']
             });
         }
 
